@@ -13,6 +13,8 @@ public class User {
 
     private String name;
 
+    private String version;
+
     public Long getId() {
         return id;
     }
@@ -23,6 +25,10 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     public void setName(String name) {

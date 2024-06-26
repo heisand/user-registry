@@ -1,13 +1,12 @@
 package no.cancerregistry;
 
 import no.cancerregistry.model.UserDTO;
-import no.cancerregistry.model.UserRequest;
-import no.cancerregistry.model.UserResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/users")
 public class CancerRegistryController {
 
 	private final CancerRegistryService cancerRegistryService;
@@ -15,8 +14,17 @@ public class CancerRegistryController {
 	public CancerRegistryController(CancerRegistryService cancerRegistryService) {
 		this.cancerRegistryService = cancerRegistryService;
 	}
-	@PostMapping("/users")
-	public UserDTO createUser(@RequestBody UserDTO user) {
-		return cancerRegistryService.createUser(user);
+	@PostMapping("")
+	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user) {
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(user);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO user) {
+		cancerRegistryService.updateUser(id, user);
+
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
 	}
 }

@@ -1,12 +1,14 @@
 package no.cancerregistry;
 
-import no.cancerregistry.model.UserDTO;
-import no.cancerregistry.model.UserRequest;
-import no.cancerregistry.model.UserResponse;
+import no.cancerregistry.exception.UserNotFoundException;
+import no.cancerregistry.exception.WrongIdException;
+import no.cancerregistry.exception.WrongVersionException;
+import no.cancerregistry.model.*;
 import no.cancerregistry.repository.UserRepository;
 import no.cancerregistry.repository.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Component
 public class CancerRegistryService {
@@ -27,9 +29,27 @@ public class CancerRegistryService {
         return new UserDTO(savedUser.getId(), savedUser.getVersion(), savedUser.getName());
     }
 
+    public void updateUser(Long id, UserDTO userDTO) {
+        if (!Objects.equals(userDTO.getId(), id)) {
+            throw new WrongIdException("");
+        }
 
-        User savedUser = userRepository.save(user);
+        User existingUser = userRepository.findById(userDTO.getId())
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User with id " + userDTO.getId() + " does not exist."));
 
-        return new UserDTO(savedUser.getId(), savedUser.getVersion(), savedUser.getName());
+        if (existingUser.getVersion() != userDTO.getVersion()) {
+            throw new WrongVersionException(
+                    "There is a version mismatch between the existing user" +
+                            userDTO.getId() + "and the requested one." +
+                            "Expected: " + existingUser.getVersion() + "" +
+                            "Found: " + userDTO.getId());
+        }
+
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setVersion(userDTO.getVersion() + 1);
+
+        userRepository.save(user);
     }
 }

@@ -21,6 +21,17 @@ public class CancerRegistryService {
         this.userRepository = userRepository;
     }
 
+    public UserDTO getUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User with id " + id + " does not exist."));
+
+        return new UserDTO(
+                Optional.ofNullable(user.getId()),
+                Optional.ofNullable(user.getVersion()),
+                user.getName());
+    }
+
     public UserDTO createUser(UserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getName());

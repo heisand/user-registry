@@ -16,6 +16,15 @@ public class CancerRegistryController {
 	public CancerRegistryController(CancerRegistryService cancerRegistryService) {
 		this.cancerRegistryService = cancerRegistryService;
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<UserDTO> getUser(@PathVariable("id") Long id) {
+		UserDTO user = cancerRegistryService.getUser(id);
+
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+	}
+
+
 	@PostMapping("")
 	public ResponseEntity<Long> createUser(@RequestBody UserDTO user) {
 

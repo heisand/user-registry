@@ -26,6 +26,7 @@ public class RepositoryTest {
     @Test
     public void createUser() {
         User newUser = new User();
+        newUser.setVersion(1);
         newUser.setName("John Doe");
 
         User savedUser = userRepository.save(newUser);
@@ -34,6 +35,7 @@ public class RepositoryTest {
         assertNotNull(foundUser);
         assertEquals("John Doe", foundUser.getName());
         assertEquals(1, foundUser.getId());
+        assertEquals(1, foundUser.getVersion());
 
         userRepository.deleteById(foundUser.getId());
         User deletedUser = userRepository.findById(savedUser.getId()).orElse(null);

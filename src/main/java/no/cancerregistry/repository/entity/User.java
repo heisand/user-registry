@@ -13,25 +13,26 @@ public class User {
 
     private String name;
 
-    private String version;
+    private Integer version;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getVersion() {
+    public Integer getVersion() {
         return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     public void setName(String name) {
         this.name = name;
     }
+
 }

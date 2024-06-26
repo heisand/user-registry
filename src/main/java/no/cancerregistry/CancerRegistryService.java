@@ -9,12 +9,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CancerRegistryService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public CancerRegistryService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public UserResponse createUser(UserDTO user) {
-        // TODO: Create user entity
-        //userRepository.save(user);
+    // TODO: Create user entity
+    //userRepository.save(user);
 
-        return null;
-    }
+    return null;
+}
 }

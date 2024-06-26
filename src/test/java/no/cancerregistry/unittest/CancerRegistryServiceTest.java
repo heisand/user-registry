@@ -28,7 +28,10 @@ public class CancerRegistryServiceTest {
 
 	@Test
 	public void testCreateUser_200OK() {
-		UserDTO user = new UserDTO(1L, 2, "John Doe");
+		UserDTO user = new UserDTO(
+				Optional.of(1L),
+				Optional.of(2),
+				"John Doe");
 
 		User userMock = new User();
 		userMock.setVersion(1);
@@ -43,13 +46,16 @@ public class CancerRegistryServiceTest {
 
 	@Test
 	public void testUpdateUser_WrongVersion() {
-		UserDTO user = new UserDTO(1L, 2, "John Doe");
+		UserDTO user = new UserDTO(
+				Optional.of(1L),
+				Optional.of(2),
+				"John Doe");
 
 		User userMock = new User();
 		userMock.setVersion(1);
 		userMock.setName("John Doe");
 
-		when(userRepository.findById(user.getId())).thenReturn(Optional.of(userMock));
+		when(userRepository.findById(1L)).thenReturn(Optional.of(userMock));
 
 		WrongVersionException exception = assertThrows(WrongVersionException.class, () -> {
 			cancerRegistryService.updateUser(1L, user);
@@ -60,9 +66,12 @@ public class CancerRegistryServiceTest {
 
 	@Test
 	public void testUpdateUser_userNotFound() {
-		UserDTO user = new UserDTO(1L, 1, "John Doe");
+		UserDTO user = new UserDTO(
+				Optional.of(1L),
+				Optional.of(1),
+				"John Doe");
 
-		when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
+		when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
 		UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
 			cancerRegistryService.updateUser(1L, user);

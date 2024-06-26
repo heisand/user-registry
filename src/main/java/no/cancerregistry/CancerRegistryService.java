@@ -9,6 +9,7 @@ import no.cancerregistry.repository.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 public class CancerRegistryService {
@@ -16,6 +17,7 @@ public class CancerRegistryService {
     private final UserRepository userRepository;
 
     public CancerRegistryService(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
@@ -26,19 +28,29 @@ public class CancerRegistryService {
 
         User savedUser = userRepository.save(user);
 
-        return new UserDTO(savedUser.getId(), savedUser.getVersion(), savedUser.getName());
+        return new UserDTO(
+                Optional.ofNullable(savedUser.getId()),
+                Optional.ofNullable(savedUser.getVersion()),
+                savedUser.getName());
     }
 
     public void updateUser(Long id, UserDTO userDTO) {
-        if (!Objects.equals(userDTO.getId(), id)) {
+        Long unwrappedId = userDTO.getId().orElse(null);
+        Integer unwrappedVersion = userDTO.getVersion().orElse(null);
+
+        if (unwrappedId == null || unwrappedVersion == null) {
+            throw new WrongVersionException("");
+        }
+
+        if (!Objects.equals(unwrappedId, id)) {
             throw new WrongIdException("");
         }
 
-        User existingUser = userRepository.findById(userDTO.getId())
+        User existingUser = userRepository.findById(unwrappedId)
                 .orElseThrow(() -> new UserNotFoundException(
                         "User with id " + userDTO.getId() + " does not exist."));
 
-        if (existingUser.getVersion() != userDTO.getVersion()) {
+        if (!Objects.equals(existingUser.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
                     "There is a version mismatch between the existing user" +
                             userDTO.getId() + "and the requested one." +
@@ -48,7 +60,7 @@ public class CancerRegistryService {
 
         User user = new User();
         user.setName(userDTO.getName());
-        user.setVersion(userDTO.getVersion() + 1);
+        user.setVersion(unwrappedVersion + 1);
 
         userRepository.save(user);
     }

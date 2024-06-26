@@ -4,21 +4,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.cancerregistry.CancerRegistryController;
 import no.cancerregistry.CancerRegistryService;
 import no.cancerregistry.model.UserDTO;
+import no.cancerregistry.repository.UserRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(CancerRegistryController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ControllerTest {
 
     @Autowired
@@ -35,7 +44,13 @@ public class ControllerTest {
         UserDTO user = new UserDTO(null, null, "");
         String userJson = objectMapper.writeValueAsString(user);
 
-     mockMvc.perform(post("/users")
+        UserDTO mockedUser = new UserDTO(
+                Optional.of(1L),
+                Optional.of(1),
+                "");
+        when(cancerRegistryService.createUser(any(UserDTO.class))).thenReturn(mockedUser);
+
+        mockMvc.perform(post("/users")
                      .contentType(MediaType.APPLICATION_JSON)
                      .content(userJson))
              .andExpect(status().isNotFound());

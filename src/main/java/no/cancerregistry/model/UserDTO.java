@@ -1,25 +1,37 @@
 package no.cancerregistry.model;
 
+import java.util.Optional;
+
 public class UserDTO {
 
-    private Long id;
-    private Integer version;
+    private Optional<Long> id;
+    private Optional<Integer> version;
     private String name;
 
-    public UserDTO(Long id, Integer version, String name) {
+    public UserDTO(Optional<Long> id, Optional<Integer> version, String name) {
         this.id = id;
         this.version = version;
         this.name = name;
     }
 
-    public Long getId() {
+    public Optional<Long> getId() {
         return id;
     }
-    public int getVersion() {
+    public Optional<Integer> getVersion() {
         return version;
     }
     public String getName() {
         return name;
+    }
+
+    public void setId() {
+        this.id = id;
+    }
+    public void setVersion() {
+        this.version = version;
+    }
+    public void setName() {
+        this.name = name;
     }
 
 }

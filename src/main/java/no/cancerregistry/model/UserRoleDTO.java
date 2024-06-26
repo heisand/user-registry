@@ -1,6 +1,6 @@
 package no.cancerregistry.model;
 
-public class UserRoleRequest {
+public class UserRoleDTO {
     private String name;
     private String description;
 }

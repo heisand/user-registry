@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/users")
 public class CancerRegistryController {
@@ -15,9 +17,16 @@ public class CancerRegistryController {
 		this.cancerRegistryService = cancerRegistryService;
 	}
 	@PostMapping("")
-	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user) {
+	public ResponseEntity<Long> createUser(@RequestBody UserDTO user) {
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);
+		UserDTO savedUser = cancerRegistryService.createUser(user);
+
+		Long savedId = savedUser.getId().orElse(null);
+		if (savedId == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(savedId);
 	}
 
 	@PutMapping("/{id}")

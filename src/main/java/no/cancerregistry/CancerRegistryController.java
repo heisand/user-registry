@@ -1,5 +1,6 @@
 package no.cancerregistry;
 
+import no.cancerregistry.model.UserDTO;
 import no.cancerregistry.model.UserRequest;
 import no.cancerregistry.model.UserResponse;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ public class CancerRegistryController {
 		this.cancerRegistryService = cancerRegistryService;
 	}
 	@PostMapping("/users")
-	public UserResponse createUser(@RequestBody UserRequest user) {
+	public UserResponse createUser(@RequestBody UserDTO user) {
 		return cancerRegistryService.createUser(user);
 	}
 }

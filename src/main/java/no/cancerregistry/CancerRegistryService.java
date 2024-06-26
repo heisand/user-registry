@@ -1,5 +1,6 @@
 package no.cancerregistry;
 
+import no.cancerregistry.model.UserDTO;
 import no.cancerregistry.model.UserRequest;
 import no.cancerregistry.model.UserResponse;
 import no.cancerregistry.repository.UserRepository;
@@ -10,7 +11,7 @@ public class CancerRegistryService {
 
     private UserRepository userRepository;
 
-    public UserResponse createUser(UserRequest user) {
+    public UserResponse createUser(UserDTO user) {
         // TODO: Create user entity
         //userRepository.save(user);
 

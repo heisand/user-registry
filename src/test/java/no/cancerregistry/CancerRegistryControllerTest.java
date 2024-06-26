@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CancerRegistryControllerTests {
+public class CancerRegistryControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;

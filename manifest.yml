@@ -1,0 +1,8 @@
+---
+applications:
+- name: gs-cancer-registry
+  memory: 256M
+  instances: 1
+  host: cancer-registry
+  domain: guides.spring.io
+  path: build/libs/cancer-registry-0.1.0.jar

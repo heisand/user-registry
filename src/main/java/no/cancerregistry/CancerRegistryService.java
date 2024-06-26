@@ -64,4 +64,9 @@ public class CancerRegistryService {
 
         userRepository.save(user);
     }
+
+    public void deleteUser(Long id) {
+        // TODO: Only delete when there are no user roles for that user
+        userRepository.deleteById(id);
+    }
 }

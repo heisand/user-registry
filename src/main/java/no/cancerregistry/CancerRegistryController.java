@@ -36,4 +36,12 @@ public class CancerRegistryController {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
 	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") Long id) {
+		cancerRegistryService.deleteUser(id);
+
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+	}
 }

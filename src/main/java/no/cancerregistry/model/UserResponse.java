@@ -5,7 +5,7 @@ import java.util.UUID;
 public class UserResponse extends UserRequest {
     private Long id;
 
-    public UserResponse(UserRequest request) {
+    public UserResponse(UserDTO userDTO) {
     }
 
 

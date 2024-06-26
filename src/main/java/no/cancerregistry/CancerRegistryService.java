@@ -4,6 +4,8 @@ import no.cancerregistry.model.UserDTO;
 import no.cancerregistry.model.UserRequest;
 import no.cancerregistry.model.UserResponse;
 import no.cancerregistry.repository.UserRepository;
+import no.cancerregistry.repository.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,10 +17,12 @@ public class CancerRegistryService {
         this.userRepository = userRepository;
     }
 
-    public UserResponse createUser(UserDTO user) {
-    // TODO: Create user entity
-    //userRepository.save(user);
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = new User();
+        user.setName(userDTO.getName());
 
-    return null;
-}
+        User savedUser = userRepository.save(user);
+
+        return new UserDTO(savedUser.getId(), savedUser.getVersion(), savedUser.getName());
+    }
 }

@@ -16,7 +16,7 @@ public class CancerRegistryController {
 		this.cancerRegistryService = cancerRegistryService;
 	}
 	@PostMapping("/users")
-	public UserResponse createUser(@RequestBody UserDTO user) {
+	public UserDTO createUser(@RequestBody UserDTO user) {
 		return cancerRegistryService.createUser(user);
 	}
 }

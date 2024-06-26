@@ -8,8 +8,11 @@ import no.cancerregistry.repository.UserRepository;
 import no.cancerregistry.repository.entity.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class CancerRegistryService {
@@ -20,6 +23,18 @@ public class CancerRegistryService {
 
         this.userRepository = userRepository;
     }
+
+    public List<UserDTO> getUsers() {
+        List<User> users = (ArrayList<User>) userRepository.findAll();
+
+        return users.stream().map(
+                user -> new UserDTO(
+                        Optional.ofNullable(user.getId()),
+                        Optional.ofNullable(user.getVersion()),
+                        user.getName())
+        ).collect(Collectors.toList());
+    }
+
 
     public UserDTO getUser(Long id) {
         User user = userRepository.findById(id)

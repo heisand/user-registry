@@ -5,16 +5,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class CancerRegistryController {
 
 	private final CancerRegistryService cancerRegistryService;
 
 	public CancerRegistryController(CancerRegistryService cancerRegistryService) {
 		this.cancerRegistryService = cancerRegistryService;
+	}
+
+	@GetMapping("")
+	public ResponseEntity<List<UserDTO>> getUsers() {
+		List<UserDTO> users = cancerRegistryService.getUsers();
+
+		return ResponseEntity.status(HttpStatus.OK).body(users);
 	}
 
 	@GetMapping("/{id}")

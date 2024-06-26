@@ -50,7 +50,7 @@ public class ControllerTest {
                 "");
         when(cancerRegistryService.createUser(any(UserDTO.class))).thenReturn(mockedUser);
 
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/api/users")
                      .contentType(MediaType.APPLICATION_JSON)
                      .content(userJson))
              .andExpect(status().isNotFound());

@@ -20,6 +20,13 @@ public class CancerRegistryService {
     public UserDTO createUser(UserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getName());
+        user.setVersion(1);
+
+        User savedUser = userRepository.save(user);
+
+        return new UserDTO(savedUser.getId(), savedUser.getVersion(), savedUser.getName());
+    }
+
 
         User savedUser = userRepository.save(user);
 

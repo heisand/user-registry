@@ -1,19 +1,73 @@
 package no.cancerregistry.unittest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import no.cancerregistry.CancerRegistryController;
+import no.cancerregistry.CancerRegistryService;
+import no.cancerregistry.exception.UserNotFoundException;
+import no.cancerregistry.exception.WrongVersionException;
+import no.cancerregistry.model.UserDTO;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class CancerRegistryControllerTest {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Mock
+    private CancerRegistryService cancerRegistryService;
 
+    @InjectMocks
+    private CancerRegistryController cancerRegistryController;
+
+    @Test
+    public void testCreateUser_200OK() {
+        UserDTO user = new UserDTO(1L, 2, "John Doe");
+
+        ResponseEntity<UserDTO> response = cancerRegistryController.createUser(user);
+
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(201));
+    }
+
+    @Test
+    public void testUpdateUser_204NoContent() {
+        UserDTO user = new UserDTO(1L, 2, "John Doe");
+
+        ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(user.getId(), user);
+
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(204));
+
+    }
+
+    @Test
+    public void testUpdateUser_userNotFound() {
+        UserDTO user = new UserDTO(1L, 2, "John Doe");
+
+        doThrow(new UserNotFoundException("")).when(cancerRegistryService).updateUser(1L, user);
+
+        ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(user.getId(), user);
+
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(404));
+    }
+
+    @Test
+    public void testUpdateUser_wrongVersion() {
+        UserDTO user = new UserDTO(1L, 2, "John Doe");
+
+        doThrow(new WrongVersionException("")).when(cancerRegistryService).updateUser(1L, user);
+
+        ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(user.getId(), user);
+
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(400));
+    }
 }

@@ -34,5 +34,10 @@ public class RepositoryTest {
         assertNotNull(foundUser);
         assertEquals("John Doe", foundUser.getName());
         assertEquals(1, foundUser.getId());
+
+        userRepository.deleteById(foundUser.getId());
+        User deletedUser = userRepository.findById(savedUser.getId()).orElse(null);
+
+        assertNull(deletedUser);
     }
 }

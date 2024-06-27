@@ -1,9 +1,9 @@
 package no.cancerregistry.controller;
 
 import no.cancerregistry.model.UserRoleDTO;
+import no.cancerregistry.model.UserWithRolesDTO;
 import no.cancerregistry.repository.entity.UserRole;
 import no.cancerregistry.service.UserRoleService;
-import no.cancerregistry.service.UserService;
 import no.cancerregistry.model.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +61,12 @@ public class UserRoleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") Long id) {
         return null;
+    }
+
+    @GetMapping("/units/{unitId}/users-with-roles")
+    public ResponseEntity<List<UserWithRolesDTO>> getUsersWithRolesByUnitId(@PathVariable Long unitId) {
+        List<UserWithRolesDTO> usersWithRoles = userRoleService.getUsersWithRolesByUnitId(unitId);
+
+        return ResponseEntity.ok(usersWithRoles);
     }
 }

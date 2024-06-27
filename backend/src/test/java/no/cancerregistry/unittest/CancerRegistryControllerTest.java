@@ -33,7 +33,7 @@ public class CancerRegistryControllerTest {
         UserDTO user = new UserDTO(
                 Optional.of(1L),
                 Optional.of(2),
-                "John Doe");
+                "Forsker Forskersen");
 
         ResponseEntity<Long> response = cancerRegistryController.createUser(user);
 
@@ -46,7 +46,7 @@ public class CancerRegistryControllerTest {
         UserDTO user = new UserDTO(
                 Optional.of(1L),
                 Optional.of(2),
-                "John Doe");
+                "Forsker Forskersen");
 
         ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(1L, user);
 
@@ -60,7 +60,7 @@ public class CancerRegistryControllerTest {
         UserDTO user = new UserDTO(
                 Optional.of(1L),
                 Optional.of(2),
-                "John Doe");
+                "Forsker Forskersen");
 
         doThrow(new UserNotFoundException("")).when(userService).updateUser(1L, user);
 
@@ -75,7 +75,7 @@ public class CancerRegistryControllerTest {
         UserDTO user = new UserDTO(
                 Optional.of(1L),
                 Optional.of(2),
-                "John Doe");
+                "Forsker Forskersen");
 
         doThrow(new WrongVersionException("")).when(userService).updateUser(1L, user);
 

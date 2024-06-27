@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CancerRegistryServiceTest {
+public class UserServiceTest {
 
 	@Mock
 	private UserRepository userRepository;
@@ -31,11 +31,11 @@ public class CancerRegistryServiceTest {
 		UserDTO user = new UserDTO(
 				Optional.of(1L),
 				Optional.of(2),
-				"John Doe");
+				"Forsker Forskersen");
 
 		User userMock = new User();
 		userMock.setVersion(1);
-		userMock.setName("John Doe");
+		userMock.setName("Forsker Forskersen");
 
 		when(userRepository.save(userMock)).thenReturn(userMock);
 
@@ -49,11 +49,11 @@ public class CancerRegistryServiceTest {
 		UserDTO user = new UserDTO(
 				Optional.of(1L),
 				Optional.of(2),
-				"John Doe");
+				"Forsker Forskersen");
 
 		User userMock = new User();
 		userMock.setVersion(1);
-		userMock.setName("John Doe");
+		userMock.setName("Forsker Forskersen");
 
 		when(userRepository.findById(1L)).thenReturn(Optional.of(userMock));
 
@@ -69,7 +69,7 @@ public class CancerRegistryServiceTest {
 		UserDTO user = new UserDTO(
 				Optional.of(1L),
 				Optional.of(1),
-				"John Doe");
+				"Forsker Forskersen");
 
 		when(userRepository.findById(1L)).thenReturn(Optional.empty());
 

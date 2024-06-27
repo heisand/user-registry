@@ -13,9 +13,17 @@ public class UserRoleDTO {
     private ZonedDateTime validFrom;
     private ZonedDateTime validTo;
 
-    public UserRoleDTO(Optional<Long> id, Optional<Integer> version) {
+    public UserRoleDTO(
+            Optional<Long> id,
+            Optional<Integer> version,
+            Long userId,
+            Long unitId,
+            Long roleId) {
         this.id = id;
         this.version = version;
+        this.userId = userId;
+        this.unitId = unitId;
+        this.roleId = roleId;
     }
 
     public Optional<Long> getId() {

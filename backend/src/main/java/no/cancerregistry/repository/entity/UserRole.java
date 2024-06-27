@@ -11,8 +11,6 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     private Integer version;
 
     @ManyToOne
@@ -30,14 +28,7 @@ public class UserRole {
     public Long getId() {
         return id;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public User getUser() {
-        return user;
-    }
+    public User getUser() {return user;}
 
     public Unit getUnit() {
         return unit;
@@ -47,28 +38,17 @@ public class UserRole {
         return role;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
+    public Integer getVersion() {return version;}
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
+    public void setUnit(Unit unit) {this.unit = unit;}
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
+    public void setRole(Role role) {this.role = role;}
 }

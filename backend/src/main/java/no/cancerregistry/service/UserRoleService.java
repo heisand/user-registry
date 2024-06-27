@@ -44,4 +44,20 @@ public class UserRoleService {
 
         return userRoleRepository.save(userRole);
     }
+
+    public UserRole updateUserRole(Long userId, Long unitId, Long roleId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new RuntimeException("User not found"));
+        Unit unit = unitRepository.findById(unitId).orElseThrow(() ->
+                new RuntimeException("Unit not found"));
+        Role role = roleRepository.findById(roleId).orElseThrow(() ->
+                new RuntimeException("Role not found"));
+
+        UserRole userRole = new UserRole();
+        userRole.setUser(user);
+        userRole.setUnit(unit);
+        userRole.setRole(role);
+
+        return userRoleRepository.save(userRole);
+    }
 }

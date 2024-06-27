@@ -1,5 +1,7 @@
 package no.cancerregistry.controller;
 
+import no.cancerregistry.model.UserRoleDTO;
+import no.cancerregistry.repository.entity.UserRole;
 import no.cancerregistry.service.UserRoleService;
 import no.cancerregistry.service.UserService;
 import no.cancerregistry.model.UserDTO;
@@ -31,14 +33,29 @@ public class UserRoleController {
     }
 
 
-    @PostMapping("")
-    public ResponseEntity<Long> createUser(@RequestBody UserDTO user) {
-        return null;
-    }
+    @PostMapping
+    public ResponseEntity<UserRole> createUserRole(
+            @RequestParam Long userId,
+            @RequestParam Long unitId,
+            @RequestParam Long roleId) {
+        // TODO:
+        // 1. Request body
+        // 2. Validation of request
+        userRoleService.createUserRole(userId, unitId, roleId);
 
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO user) {
-        return null;
+    public ResponseEntity<UserRoleDTO> updateUser(
+            @RequestParam Long userId,
+            @RequestParam Long unitId,
+            @RequestParam Long roleId) {
+        // TODO:
+        // 1. Request body
+        // 2. Validation of request
+        userRoleService.updateUserRole(userId, unitId, roleId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")

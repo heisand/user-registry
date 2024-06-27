@@ -1,7 +1,7 @@
 package no.cancerregistry.unittest;
 
-import no.cancerregistry.CancerRegistryController;
-import no.cancerregistry.CancerRegistryService;
+import no.cancerregistry.controller.UserController;
+import no.cancerregistry.service.UserService;
 import no.cancerregistry.exception.UserNotFoundException;
 import no.cancerregistry.exception.WrongVersionException;
 import no.cancerregistry.model.UserDTO;
@@ -23,10 +23,10 @@ import static org.mockito.Mockito.*;
 public class CancerRegistryControllerTest {
 
     @Mock
-    private CancerRegistryService cancerRegistryService;
+    private UserService userService;
 
     @InjectMocks
-    private CancerRegistryController cancerRegistryController;
+    private UserController cancerRegistryController;
 
     @Test
     public void testCreateUser_200OK() {
@@ -62,7 +62,7 @@ public class CancerRegistryControllerTest {
                 Optional.of(2),
                 "John Doe");
 
-        doThrow(new UserNotFoundException("")).when(cancerRegistryService).updateUser(1L, user);
+        doThrow(new UserNotFoundException("")).when(userService).updateUser(1L, user);
 
         ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(1L, user);
 
@@ -77,7 +77,7 @@ public class CancerRegistryControllerTest {
                 Optional.of(2),
                 "John Doe");
 
-        doThrow(new WrongVersionException("")).when(cancerRegistryService).updateUser(1L, user);
+        doThrow(new WrongVersionException("")).when(userService).updateUser(1L, user);
 
         ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(1L, user);
 

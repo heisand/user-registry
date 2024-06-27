@@ -1,16 +1,12 @@
 package no.cancerregistry.integrationtest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.cancerregistry.CancerRegistryController;
-import no.cancerregistry.CancerRegistryService;
+import no.cancerregistry.service.UserService;
 import no.cancerregistry.model.UserDTO;
-import no.cancerregistry.repository.UserRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -37,7 +33,7 @@ public class ControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private CancerRegistryService cancerRegistryService;
+    private UserService userService;
 
     @Test
     public void testGetUserById_UserNotFound() throws Exception {
@@ -48,7 +44,7 @@ public class ControllerTest {
                 Optional.of(1L),
                 Optional.of(1),
                 "");
-        when(cancerRegistryService.createUser(any(UserDTO.class))).thenReturn(mockedUser);
+        when(userService.createUser(any(UserDTO.class))).thenReturn(mockedUser);
 
         mockMvc.perform(post("/api/users")
                      .contentType(MediaType.APPLICATION_JSON)

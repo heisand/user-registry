@@ -1,4 +1,4 @@
-package no.cancerregistry;
+package no.cancerregistry.service;
 
 import no.cancerregistry.exception.UserNotFoundException;
 import no.cancerregistry.exception.WrongIdException;
@@ -6,7 +6,7 @@ import no.cancerregistry.exception.WrongVersionException;
 import no.cancerregistry.model.*;
 import no.cancerregistry.repository.UserRepository;
 import no.cancerregistry.repository.entity.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
-public class CancerRegistryService {
+@Service
+public class UserService {
 
     private final UserRepository userRepository;
 
-    public CancerRegistryService(UserRepository userRepository) {
-
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -80,7 +79,7 @@ public class CancerRegistryService {
             throw new WrongVersionException(
                     "There is a version mismatch between the existing user" +
                             userDTO.getId() + "and the requested one." +
-                            "Expected: " + existingUser.getVersion() + "" +
+                            "Expected: " + existingUser.getVersion() +
                             "Found: " + userDTO.getId());
         }
 

@@ -1,6 +1,6 @@
 package no.cancerregistry.unittest;
 
-import no.cancerregistry.CancerRegistryService;
+import no.cancerregistry.service.UserService;
 import no.cancerregistry.exception.UserNotFoundException;
 import no.cancerregistry.exception.WrongVersionException;
 import no.cancerregistry.model.UserDTO;
@@ -24,7 +24,7 @@ public class CancerRegistryServiceTest {
 	private UserRepository userRepository;
 
 	@InjectMocks
-	private CancerRegistryService cancerRegistryService;
+	private UserService userService;
 
 	@Test
 	public void testCreateUser_200OK() {
@@ -39,7 +39,7 @@ public class CancerRegistryServiceTest {
 
 		when(userRepository.save(userMock)).thenReturn(userMock);
 
-		UserDTO savedUser = cancerRegistryService.createUser(user);
+		UserDTO savedUser = userService.createUser(user);
 
 		assertNotNull(savedUser);
 	}
@@ -58,7 +58,7 @@ public class CancerRegistryServiceTest {
 		when(userRepository.findById(1L)).thenReturn(Optional.of(userMock));
 
 		WrongVersionException exception = assertThrows(WrongVersionException.class, () -> {
-			cancerRegistryService.updateUser(1L, user);
+			userService.updateUser(1L, user);
 		});
 
 		//assertEquals("", exception.getMessage());
@@ -74,7 +74,7 @@ public class CancerRegistryServiceTest {
 		when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
 		UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
-			cancerRegistryService.updateUser(1L, user);
+			userService.updateUser(1L, user);
 		});
 
 		//assertEquals("", exception.getMessage());

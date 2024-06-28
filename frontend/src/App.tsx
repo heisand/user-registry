@@ -18,6 +18,7 @@ import { User } from "./types/user";
 import { Form } from "./view/Form";
 import { Operation } from "./types/operation";
 import { Entity } from "./types/entity";
+import { FormButtons } from "./view/FormButtons";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -87,47 +88,7 @@ function App() {
           )}
         </Box>
       ) : null}
-      <Box
-        display="flex"
-        flexDirection="row"
-        gap="48px"
-        marginTop="48px"
-        justifyContent="center"
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap="24px"
-          alignItems="center"
-        >
-          <Form entity={Entity.User} operation={Operation.Create}/>
-          <Form entity={Entity.Unit} operation={Operation.Create}/>
-          <Form entity={Entity.Role} operation={Operation.Create}/>
-          <Form entity={Entity.UserRole} operation={Operation.Create}/>
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap="24px"
-          alignItems="center"
-        >
-          <Form entity={Entity.User} operation={Operation.Update}/>
-          <Form entity={Entity.Unit} operation={Operation.Update}/>
-          <Form entity={Entity.Role} operation={Operation.Update}/>
-          <Form entity={Entity.UserRole} operation={Operation.Update}/>
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap="24px"
-          alignItems="center"
-        >
-          <Form entity={Entity.User} operation={Operation.Delete}/>
-          <Form entity={Entity.Unit} operation={Operation.Delete}/>
-          <Form entity={Entity.Role} operation={Operation.Delete}/>
-          <Form entity={Entity.UserRole} operation={Operation.Delete}/>
-        </Box>
-      </Box>
+      <FormButtons />
     </Box>
   );
 }

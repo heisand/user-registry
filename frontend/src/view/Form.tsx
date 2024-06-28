@@ -15,7 +15,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { createUser } from "../api/api";
+import { createRole, createUnit, createUser, createUserRole } from "../api/api";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
 
@@ -63,7 +63,64 @@ export function Form(props: FormProps) {
 
   const title = `${getOperation(props.operation)} ${getEntity(props.entity)}`;
 
-  function onSave() {}
+  function onSave() {
+      switch (props.entity) {
+        case Entity.User:
+          switch (props.operation) {
+            case Operation.Create:
+              createUser(input)
+              break;
+            case Operation.Update:
+              //updateUser();
+              break;
+            case Operation.Delete:
+              //deleteUser();
+              break;
+          }
+          break;
+        case Entity.Unit:
+          switch (props.operation) {
+            case Operation.Create:
+              createUnit(input);
+              break;
+            case Operation.Update:
+              //updateUnit();
+              break;
+            case Operation.Delete:
+              //deleteUnit();
+              break;
+          }
+          break;
+        case Entity.Role:
+          switch (props.operation) {
+            case Operation.Create:
+              createRole(input);
+              break;
+            case Operation.Update:
+              //updateRole();
+              break;
+            case Operation.Delete:
+              //deleteRole();
+              break;
+          }
+          break;
+        case Entity.UserRole:
+          switch (props.operation) {
+            case Operation.Create:
+              createUserRole(input);
+              break;
+            case Operation.Update:
+              //updateUserRole();
+              break;
+            case Operation.Delete:
+              //deleteUserRole();
+              break;
+          }
+          break;
+        default:
+          console.log("Invalid combination of entity and operation");
+      }
+  }
 
   return (
     <>
@@ -84,7 +141,7 @@ export function Form(props: FormProps) {
                 onChange={handleInputChange}
               />
               {!isError ? (
-                <FormHelperText>Enter the name on the user.</FormHelperText>
+                <FormHelperText>Enter the name on the entity.</FormHelperText>
               ) : (
                 <FormErrorMessage>Name is required.</FormErrorMessage>
               )}

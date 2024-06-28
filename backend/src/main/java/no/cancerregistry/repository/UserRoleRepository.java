@@ -14,15 +14,14 @@ public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
     @Query("SELECT ur FROM UserRole ur JOIN FETCH ur.user u JOIN FETCH ur.role r WHERE ur.unit.id = :unitId")
     List<UserRole> findUserRolesByUnitId(Long unitId);
 
-    @Query("SELECT EXISTS (" +
-            "SELECT 1" +
+    @Query("SELECT COUNT(*)" +
             "FROM UserRole u " +
             "WHERE u.user.id = :userId " +
             "AND u.unit.id = :unitId " +
             "AND u.role.id = :roleId " +
             "AND (:validFrom BETWEEN u.validFrom AND u.validTo " +
-            "     OR :validTo BETWEEN u.validFrom AND u.validTo)) as has_overlapping_role")
-    boolean hasOverlappingUserRole(
+            "     OR :validTo BETWEEN u.validFrom AND u.validTo)")
+    Long hasOverlappingUserRole(
             Long userId,
             Long unitId,
             Long roleId,

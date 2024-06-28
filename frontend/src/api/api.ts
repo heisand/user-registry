@@ -12,7 +12,7 @@ async function postEntity(url: string, name: string) {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(name),
+      body: JSON.stringify({ name }),
     });
 
     if (!response.ok) {

@@ -64,62 +64,62 @@ export function Form(props: FormProps) {
   const title = `${getOperation(props.operation)} ${getEntity(props.entity)}`;
 
   function onSave() {
-      switch (props.entity) {
-        case Entity.User:
-          switch (props.operation) {
-            case Operation.Create:
-              createUser(input)
-              break;
-            case Operation.Update:
-              //updateUser();
-              break;
-            case Operation.Delete:
-              //deleteUser();
-              break;
-          }
-          break;
-        case Entity.Unit:
-          switch (props.operation) {
-            case Operation.Create:
-              createUnit(input);
-              break;
-            case Operation.Update:
-              //updateUnit();
-              break;
-            case Operation.Delete:
-              //deleteUnit();
-              break;
-          }
-          break;
-        case Entity.Role:
-          switch (props.operation) {
-            case Operation.Create:
-              createRole(input);
-              break;
-            case Operation.Update:
-              //updateRole();
-              break;
-            case Operation.Delete:
-              //deleteRole();
-              break;
-          }
-          break;
-        case Entity.UserRole:
-          switch (props.operation) {
-            case Operation.Create:
-              createUserRole(input);
-              break;
-            case Operation.Update:
-              //updateUserRole();
-              break;
-            case Operation.Delete:
-              //deleteUserRole();
-              break;
-          }
-          break;
-        default:
-          console.log("Invalid combination of entity and operation");
-      }
+    switch (props.entity) {
+      case Entity.User:
+        switch (props.operation) {
+          case Operation.Create:
+            createUser(input);
+            break;
+          case Operation.Update:
+            //updateUser();
+            break;
+          case Operation.Delete:
+            //deleteUser();
+            break;
+        }
+        break;
+      case Entity.Unit:
+        switch (props.operation) {
+          case Operation.Create:
+            createUnit(input);
+            break;
+          case Operation.Update:
+            //updateUnit();
+            break;
+          case Operation.Delete:
+            //deleteUnit();
+            break;
+        }
+        break;
+      case Entity.Role:
+        switch (props.operation) {
+          case Operation.Create:
+            createRole(input);
+            break;
+          case Operation.Update:
+            //updateRole();
+            break;
+          case Operation.Delete:
+            //deleteRole();
+            break;
+        }
+        break;
+      case Entity.UserRole:
+        switch (props.operation) {
+          case Operation.Create:
+            createUserRole(input);
+            break;
+          case Operation.Update:
+            //updateUserRole();
+            break;
+          case Operation.Delete:
+            //deleteUserRole();
+            break;
+        }
+        break;
+      default:
+        console.log("Invalid combination of entity and operation");
+    }
   }
 
   return (

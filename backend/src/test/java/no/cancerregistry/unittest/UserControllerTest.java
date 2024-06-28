@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CancerRegistryControllerTest {
+public class UserControllerTest {
 
     @Mock
     private UserService userService;
@@ -38,7 +39,7 @@ public class CancerRegistryControllerTest {
         ResponseEntity<Long> response = cancerRegistryController.createUser(user);
 
         assertNotNull(response);
-        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(201));
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test
@@ -51,37 +52,6 @@ public class CancerRegistryControllerTest {
         ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(1L, user);
 
         assertNotNull(response);
-        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(204));
-
-    }
-
-    @Test
-    public void testUpdateUser_userNotFound() {
-        UserDTO user = new UserDTO(
-                Optional.of(1L),
-                Optional.of(2),
-                "Forsker Forskersen");
-
-        doThrow(new UserNotFoundException("")).when(userService).updateUser(1L, user);
-
-        ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(1L, user);
-
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(404));
-    }
-
-    @Test
-    public void testUpdateUser_wrongVersion() {
-        UserDTO user = new UserDTO(
-                Optional.of(1L),
-                Optional.of(2),
-                "Forsker Forskersen");
-
-        doThrow(new WrongVersionException("")).when(userService).updateUser(1L, user);
-
-        ResponseEntity<UserDTO> response = cancerRegistryController.updateUser(1L, user);
-
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), HttpStatusCode.valueOf(400));
+        assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
     }
 }

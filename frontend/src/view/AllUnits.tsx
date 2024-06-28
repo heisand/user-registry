@@ -42,7 +42,7 @@ export function AllUnits() {
       </Button>
       {users.length > 0 ? (
         <Box marginTop="48px">
-          <Heading>All users</Heading>
+          <Heading>All units</Heading>
           {loading ? (
             <Spinner size="xl" />
           ) : (

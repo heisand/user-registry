@@ -42,7 +42,7 @@ export function AllRoles() {
       </Button>
       {users.length > 0 ? (
         <Box marginTop="48px">
-          <Heading>All users</Heading>
+          <Heading>All roles</Heading>
           {loading ? (
             <Spinner size="xl" />
           ) : (

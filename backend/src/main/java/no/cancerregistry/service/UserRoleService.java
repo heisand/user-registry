@@ -1,5 +1,6 @@
 package no.cancerregistry.service;
 
+import no.cancerregistry.exception.OverlappingRoleException;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
 import no.cancerregistry.repository.RoleRepository;
@@ -50,6 +51,10 @@ public class UserRoleService {
         userRole.setRole(role);
         userRole.setValidFrom(userRoleDTO.getValidFrom());
         userRole.setValidTo(userRoleDTO.getValidTo());
+
+        if (hasOverlappingRole(userRole)) {
+            throw new OverlappingRoleException("A valid user role already exists");
+        }
 
         UserRole savedUserRole = userRoleRepository.save(userRole);
 
@@ -103,5 +108,15 @@ public class UserRoleService {
                     return new UserWithRolesDTO(user.getId(), user.getName(), roles);
                 })
                 .collect(Collectors.toList());
+    }
+
+    public boolean hasOverlappingRole(UserRole userRole) {
+        return userRoleRepository.hasOverlappingUserRole(
+                userRole.getUser().getId(),
+                userRole.getUnit().getId(),
+                userRole.getRole().getId(),
+                userRole.getValidFrom(),
+                userRole.getValidTo()
+        );
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -102,5 +103,46 @@ public class RepositoryTest {
         List<UserWithRolesDTO> usersWithRoles = userRoleService.getUsersWithRolesByUnitId(1L);
 
         assertEquals(1, usersWithRoles.size());
+    }
+
+    @Test
+    public void overlappingRoles() {
+        User user = new User();
+        user.setVersion(2);
+        user.setName("Forsker Forskersen");
+
+        User savedUser = userRepository.save(user);
+
+        Unit unit = new Unit();
+        unit.setName("Forsker");
+        unit.setVersion(2);
+
+        Unit savedUnit = unitRepository.save(unit);
+
+        Unit unit2 = new Unit();
+        unit.setName("Lege");
+        unit.setVersion(2);
+
+        unitRepository.save(unit2);
+
+        Role role = new Role();
+        role.setName("Forsker");
+        role.setVersion(2);
+
+        Role savedRole = roleRepository.save(role);
+
+        UserRole userRole = new UserRole();
+        userRole.setVersion(2);
+        userRole.setUser(savedUser);
+        userRole.setUnit(savedUnit);
+        userRole.setRole(savedRole);
+        userRole.setValidFrom(ZonedDateTime.now());
+        userRole.setValidTo(ZonedDateTime.now().plusDays(1));
+
+        userRoleRepository.save(userRole);
+
+        boolean isOverlappingRoles = userRoleService.hasOverlappingRole(userRole);
+
+        assertTrue(isOverlappingRoles);
     }
 }

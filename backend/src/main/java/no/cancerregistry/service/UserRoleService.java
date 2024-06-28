@@ -82,7 +82,17 @@ public class UserRoleService {
         userRole.setUnit(unit);
         userRole.setRole(role);
 
-        return userRoleRepository.save(userRole);
+        if (hasOverlappingRole(userRole)) {
+            throw new OverlappingRoleException("A valid user role already exists");
+        }
+
+        UserRole userRoleToSave = new UserRole();
+
+        // Only the valid from and valid to timestamps can be changed
+        userRoleToSave.setValidFrom(userRoleDTO.getValidFrom());
+        userRoleToSave.setValidTo(userRoleDTO.getValidTo());
+
+        return userRoleRepository.save(userRoleToSave);
     }
 
 

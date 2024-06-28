@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDateRange {
 
-    String message() default "validFrom must be after validTo";
+    String message() default "validTo must be after validFrom";
 
     Class<?>[] groups() default {};
 

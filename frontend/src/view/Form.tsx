@@ -13,11 +13,13 @@ import {
   ModalFooter,
   FormHelperText,
   FormErrorMessage,
+  Box,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { createRole, createUnit, createUser, createUserRole } from "../api/api";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
+import { Calendar } from "../component/DatePicker";
 
 type FormProps = {
   entity: Entity;
@@ -146,6 +148,59 @@ export function Form(props: FormProps) {
                 <FormErrorMessage>Name is required.</FormErrorMessage>
               )}
             </FormControl>
+            {props.entity === Entity.UserRole ? (
+              <Box marginTop="24px">
+                <FormControl isRequired>
+                  <FormLabel>User ID</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    placeholder="Name"
+                    onChange={handleInputChange}
+                  />
+                  {!isError ? (
+                    <FormHelperText>
+                      Enter the name on the entity.
+                    </FormHelperText>
+                  ) : (
+                    <FormErrorMessage>Name is required.</FormErrorMessage>
+                  )}
+                </FormControl >
+                <FormControl isRequired marginTop="24px">
+                  <FormLabel>Unit ID</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    placeholder="Name"
+                    onChange={handleInputChange}
+                  />
+                  {!isError ? (
+                    <FormHelperText>
+                      Enter the name on the entity.
+                    </FormHelperText>
+                  ) : (
+                    <FormErrorMessage>Name is required.</FormErrorMessage>
+                  )}
+                </FormControl>
+                <FormControl isRequired marginTop="24px">
+                  <FormLabel>Role ID</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    placeholder="Name"
+                    onChange={handleInputChange}
+                  />
+                  {!isError ? (
+                    <FormHelperText>
+                      Enter the name on the entity.
+                    </FormHelperText>
+                  ) : (
+                    <FormErrorMessage>Name is required.</FormErrorMessage>
+                  )}
+                </FormControl>
+                <FormLabel marginTop="24px">Valid from</FormLabel>
+                <Calendar />
+                <FormLabel marginTop="24px">Valid to</FormLabel>
+                <Calendar />
+              </Box>
+            ) : null}
           </ModalBody>
 
           <ModalFooter>

@@ -19,6 +19,10 @@ import { Form } from "./view/Form";
 import { Operation } from "./types/operation";
 import { Entity } from "./types/entity";
 import { FormButtons } from "./view/FormButtons";
+import { AllUsers } from "./view/AllUsers";
+import { AllUnits } from "./view/AllUnits";
+import { AllRoles } from "./view/AllRoles";
+import { AllUserRoles } from "./view/AllUserRoles";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -56,38 +60,10 @@ function App() {
       <Heading as="h1" textAlign="center">
         Cancer Registry
       </Heading>
-      <Button colorScheme="teal" size="lg" onClick={handleGetAllUsers}>
-        Get all users
-      </Button>
-      {users.length > 0 ? (
-        <Box marginTop="48px">
-          <Heading>All users</Heading>
-          {loading ? (
-            <Spinner size="xl" />
-          ) : (
-            <TableContainer>
-              <Table colorScheme="teal">
-                <Thead>
-                  <Tr>
-                    <Th>ID</Th>
-                    <Th>Version</Th>
-                    <Th>Name</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {users.map((user) => (
-                    <Tr key={user.id}>
-                      <Td>{user.id}</Td>
-                      <Td>{user.version}</Td>
-                      <Td>{user.name}</Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          )}
-        </Box>
-      ) : null}
+      <AllUsers/>
+      <AllUnits/>
+      <AllRoles/>
+      <AllUserRoles/>
       <FormButtons />
     </Box>
   );

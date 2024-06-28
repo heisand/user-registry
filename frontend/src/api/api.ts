@@ -1,4 +1,7 @@
+import { Role } from "../types/role";
+import { Unit } from "../types/unit";
 import { User } from "../types/user";
+import { UserRole } from "../types/userrole";
 import { BASE_URL } from "../utils/baseurl";
 
 async function postEntity(url: string, name: string) {
@@ -74,6 +77,51 @@ export async function getUsers() {
     return [];
   }
   const users: User[] = await response.json();
+  return users;
+}
+
+export async function getUnits() {
+  const response = await fetch(`${BASE_URL}/api/units`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  if (!response.ok) {
+    console.error("Error fetching", response.status, await response.text());
+    return [];
+  }
+  const users: Unit[] = await response.json();
+  return users;
+}
+
+export async function getRoles() {
+  const response = await fetch(`${BASE_URL}/api/roles`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  if (!response.ok) {
+    console.error("Error fetching", response.status, await response.text());
+    return [];
+  }
+  const users: Role[] = await response.json();
+  return users;
+}
+
+export async function getUserRoles() {
+  const response = await fetch(`${BASE_URL}/api/user-roles`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  if (!response.ok) {
+    console.error("Error fetching", response.status, await response.text());
+    return [];
+  }
+  const users: UserRole[] = await response.json();
   return users;
 }
 

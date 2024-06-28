@@ -60,10 +60,10 @@ public class RoleService {
     }
 
     public void updateRole(Long id, RoleDTO roleDTO) {
-        Long unwrappedId = roleDTO.getId().orElse(null);
+        Long unwrappedId = roleDTO.getId().orElse(id);
         Integer unwrappedVersion = roleDTO.getVersion().orElse(null);
 
-        if (unwrappedId == null || unwrappedVersion == null) {
+        if (unwrappedVersion == null) {
             throw new WrongVersionException("");
         }
 
@@ -73,14 +73,14 @@ public class RoleService {
 
         Role existingRole = roleRepository.findById(unwrappedId)
                 .orElseThrow(() -> new UserNotFoundException(
-                        "Role with id " + roleDTO.getId() + " does not exist."));
+                        "Role with id " + unwrappedId + " does not exist."));
 
         if (!Objects.equals(existingRole.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
                     "There is a version mismatch between the existing role" +
-                            roleDTO.getId() + "and the requested one." +
+                            unwrappedId + "and the requested one." +
                             "Expected: " + existingRole.getVersion() +
-                            "Found: " + roleDTO.getId());
+                            "Found: " + roleDTO.getVersion());
         }
 
         Role role = new Role();

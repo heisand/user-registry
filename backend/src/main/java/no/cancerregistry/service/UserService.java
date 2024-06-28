@@ -60,10 +60,10 @@ public class UserService {
     }
 
     public void updateUser(Long id, UserDTO userDTO) {
-        Long unwrappedId = userDTO.getId().orElse(null);
+        Long unwrappedId = userDTO.getId().orElse(id);
         Integer unwrappedVersion = userDTO.getVersion().orElse(null);
 
-        if (unwrappedId == null || unwrappedVersion == null) {
+        if (unwrappedVersion == null) {
             throw new WrongVersionException("");
         }
 
@@ -73,14 +73,14 @@ public class UserService {
 
         User existingUser = userRepository.findById(unwrappedId)
                 .orElseThrow(() -> new UserNotFoundException(
-                        "User with id " + userDTO.getId() + " does not exist."));
+                        "User with id " + unwrappedId + " does not exist."));
 
         if (!Objects.equals(existingUser.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
                     "There is a version mismatch between the existing user" +
-                            userDTO.getId() + "and the requested one." +
+                            unwrappedId + "and the requested one." +
                             "Expected: " + existingUser.getVersion() +
-                            "Found: " + userDTO.getId());
+                            "Found: " + userDTO.getVersion());
         }
 
         User user = new User();

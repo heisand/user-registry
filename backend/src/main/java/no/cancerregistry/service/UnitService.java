@@ -60,10 +60,10 @@ public class UnitService {
     }
 
     public void updateUnit(Long id, UnitDTO unitDTO) {
-        Long unwrappedId = unitDTO.getId().orElse(null);
+        Long unwrappedId = unitDTO.getId().orElse(id);
         Integer unwrappedVersion = unitDTO.getVersion().orElse(null);
 
-        if (unwrappedId == null || unwrappedVersion == null) {
+        if (unwrappedVersion == null) {
             throw new WrongVersionException("");
         }
 
@@ -73,14 +73,14 @@ public class UnitService {
 
         Unit existingUnit = unitRepository.findById(unwrappedId)
                 .orElseThrow(() -> new UserNotFoundException(
-                        "Unit with id " + unitDTO.getId() + " does not exist."));
+                        "Unit with id " + unwrappedId + " does not exist."));
 
         if (!Objects.equals(existingUnit.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
                     "There is a version mismatch between the existing unit" +
-                            unitDTO.getId() + "and the requested one." +
+                            unwrappedId + "and the requested one." +
                             "Expected: " + existingUnit.getVersion() +
-                            "Found: " + unitDTO.getId());
+                            "Found: " + unitDTO.getVersion());
         }
 
         Unit unit = new Unit();

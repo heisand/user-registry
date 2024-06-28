@@ -117,7 +117,6 @@ public class UserRoleService {
                 userRole.getRole().getId(),
                 userRole.getValidFrom(),
                 userRole.getValidTo()
-        ) > 1;
-        //return false;
+        );
     }
 }

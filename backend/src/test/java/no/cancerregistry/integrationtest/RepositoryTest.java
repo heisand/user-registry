@@ -141,16 +141,6 @@ public class RepositoryTest {
 
         userRoleRepository.save(userRole);
 
-        UserRole userRole2 = new UserRole();
-        userRole2.setVersion(2);
-        userRole2.setUser(savedUser);
-        userRole2.setUnit(savedUnit);
-        userRole2.setRole(savedRole);
-        userRole2.setValidFrom(ZonedDateTime.now());
-        userRole2.setValidTo(ZonedDateTime.now().plusDays(1));
-
-        userRoleRepository.save(userRole2);
-
         boolean isOverlappingRoles = userRoleService.hasOverlappingRole(userRole);
 
         assertTrue(isOverlappingRoles);

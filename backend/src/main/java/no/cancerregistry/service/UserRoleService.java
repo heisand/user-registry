@@ -36,28 +36,40 @@ public class UserRoleService {
         this.roleRepository = roleRepository;
     }
 
-    public UserRole createUserRole(Long userId, Long unitId, Long roleId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
+    public UserRoleDTO createUserRole(UserRoleDTO userRoleDTO) {
+        User user = userRepository.findById(userRoleDTO.getUserId()).orElseThrow(() ->
                 new RuntimeException("User not found"));
-        Unit unit = unitRepository.findById(unitId).orElseThrow(() ->
+        Unit unit = unitRepository.findById(userRoleDTO.getUnitId()).orElseThrow(() ->
                 new RuntimeException("Unit not found"));
-        Role role = roleRepository.findById(roleId).orElseThrow(() ->
+        Role role = roleRepository.findById(userRoleDTO.getRoleId()).orElseThrow(() ->
                 new RuntimeException("Role not found"));
 
         UserRole userRole = new UserRole();
         userRole.setUser(user);
         userRole.setUnit(unit);
         userRole.setRole(role);
+        userRole.setValidFrom(userRoleDTO.getValidFrom());
+        userRole.setValidTo(userRoleDTO.getValidTo());
 
-        return userRoleRepository.save(userRole);
+        UserRole savedUserRole = userRoleRepository.save(userRole);
+
+        return new UserRoleDTO(
+                Optional.ofNullable(savedUserRole.getId()),
+                Optional.ofNullable(savedUserRole.getVersion()),
+                savedUserRole.getUser().getId(),
+                savedUserRole.getUnit().getId(),
+                savedUserRole.getRole().getId(),
+                savedUserRole.getValidFrom(),
+                savedUserRole.getValidTo()
+        );
     }
 
-    public UserRole updateUserRole(Long userId, Long unitId, Long roleId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
+    public UserRole updateUserRole(UserRoleDTO userRoleDTO) {
+        User user = userRepository.findById(userRoleDTO.getUserId()).orElseThrow(() ->
                 new RuntimeException("User not found"));
-        Unit unit = unitRepository.findById(unitId).orElseThrow(() ->
+        Unit unit = unitRepository.findById(userRoleDTO.getUnitId()).orElseThrow(() ->
                 new RuntimeException("Unit not found"));
-        Role role = roleRepository.findById(roleId).orElseThrow(() ->
+        Role role = roleRepository.findById(userRoleDTO.getRoleId()).orElseThrow(() ->
                 new RuntimeException("Role not found"));
 
         UserRole userRole = new UserRole();
@@ -84,7 +96,9 @@ public class UserRoleService {
                                     Optional.ofNullable(userRole.getVersion()),
                                     userRole.getUser().getId(),
                                     userRole.getUnit().getId(),
-                                    userRole.getRole().getId()))
+                                    userRole.getRole().getId(),
+                                    userRole.getValidFrom(),
+                                    userRole.getValidTo()))
                             .collect(Collectors.toList());
                     return new UserWithRolesDTO(user.getId(), user.getName(), roles);
                 })

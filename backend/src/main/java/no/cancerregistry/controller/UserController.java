@@ -1,5 +1,6 @@
 package no.cancerregistry.controller;
 
+import jakarta.validation.Valid;
 import no.cancerregistry.service.UserService;
 import no.cancerregistry.model.UserDTO;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class UserController {
 
 
 	@PostMapping("")
-	public ResponseEntity<Long> createUser(@RequestBody UserDTO user) {
+	public ResponseEntity<Long> createUser(@Valid @RequestBody UserDTO user) {
 
 		UserDTO savedUser = userService.createUser(user);
 
@@ -48,7 +49,9 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO user) {
+	public ResponseEntity<UserDTO> updateUser(
+			@PathVariable("id") Long id, @Valid @RequestBody UserDTO user) {
+		// TODO: Validate request better for version
 		userService.updateUser(id, user);
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

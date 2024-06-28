@@ -3,6 +3,8 @@ package no.cancerregistry.repository.entity;
 
 import jakarta.persistence.*;
 
+import java.time.ZonedDateTime;
+
 @Entity
 @Table(name = "user_roles")
 public class UserRole {
@@ -25,6 +27,10 @@ public class UserRole {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    private ZonedDateTime validFrom;
+
+    private ZonedDateTime validTo;
+
     public Long getId() {
         return id;
     }
@@ -38,7 +44,11 @@ public class UserRole {
         return role;
     }
 
-    public Integer getVersion() {return version;}
+    public Integer getVersion() { return version; }
+
+    public ZonedDateTime getValidFrom() { return validFrom; }
+
+    public ZonedDateTime getValidTo() { return validTo; }
 
     public void setVersion(Integer version) {
         this.version = version;
@@ -48,7 +58,11 @@ public class UserRole {
         this.user = user;
     }
 
-    public void setUnit(Unit unit) {this.unit = unit;}
+    public void setUnit(Unit unit) { this.unit = unit; }
 
-    public void setRole(Role role) {this.role = role;}
+    public void setRole(Role role) { this.role = role; }
+
+    public void setValidFrom(ZonedDateTime validFrom) { this.validFrom = validFrom; }
+
+    public void setValidTo(ZonedDateTime validTo) { this.validTo = validTo; }
 }

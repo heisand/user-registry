@@ -1,11 +1,14 @@
 package no.cancerregistry.model;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Optional;
 
 public class UserDTO {
 
     private Optional<Long> id;
     private Optional<Integer> version;
+    @NotNull
     private String name;
 
     public UserDTO(Optional<Long> id, Optional<Integer> version, String name) {

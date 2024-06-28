@@ -1,10 +1,9 @@
 package no.cancerregistry.controller;
 
+import jakarta.validation.Valid;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
-import no.cancerregistry.repository.entity.UserRole;
 import no.cancerregistry.service.UserRoleService;
-import no.cancerregistry.model.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,43 +22,32 @@ public class UserRoleController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<UserDTO>> getUsers() {
+    public ResponseEntity<List<UserRoleDTO>> getUsers() {
         return null;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable("id") Long id) {
+    public ResponseEntity<UserRoleDTO> getUser(@PathVariable("id") Long id) {
         return null;
     }
 
 
     @PostMapping
-    public ResponseEntity<UserRole> createUserRole(
-            @RequestParam Long userId,
-            @RequestParam Long unitId,
-            @RequestParam Long roleId) {
-        // TODO:
-        // 1. Request body
-        // 2. Validation of request
-        userRoleService.createUserRole(userId, unitId, roleId);
+    public ResponseEntity<UserRoleDTO> createUserRole(@Valid @RequestBody UserRoleDTO userRole) {
+        userRoleService.createUserRole(userRole);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<UserRoleDTO> updateUser(
-            @RequestParam Long userId,
-            @RequestParam Long unitId,
-            @RequestParam Long roleId) {
-        // TODO:
-        // 1. Request body
-        // 2. Validation of request
-        userRoleService.updateUserRole(userId, unitId, roleId);
+    public ResponseEntity<UserRoleDTO> updateUser(@Valid @RequestBody UserRoleDTO userRole) {
+        userRoleService.updateUserRole(userRole);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") Long id) {
+    public ResponseEntity<UserRoleDTO> deleteUser(@PathVariable("id") Long id) {
         return null;
     }
 

@@ -64,11 +64,11 @@ public class RoleService {
         Integer unwrappedVersion = roleDTO.getVersion().orElse(null);
 
         if (unwrappedVersion == null) {
-            throw new WrongVersionException("");
+            throw new WrongVersionException("Version is missing");
         }
 
         if (!Objects.equals(unwrappedId, id)) {
-            throw new WrongIdException("");
+            throw new WrongIdException("The specified id does mot match the requested body");
         }
 
         Role existingRole = roleRepository.findById(unwrappedId)

@@ -1,6 +1,7 @@
 package no.cancerregistry.service;
 
 import no.cancerregistry.exception.OverlappingRoleException;
+import no.cancerregistry.model.RoleDTO;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
 import no.cancerregistry.repository.RoleRepository;
@@ -106,15 +107,11 @@ public class UserRoleService {
         return userRolesMap.entrySet().stream()
                 .map(entry -> {
                     User user = entry.getKey();
-                    List<UserRoleDTO> roles = entry.getValue().stream()
-                            .map(userRole -> new UserRoleDTO(
+                    List<RoleDTO> roles = entry.getValue().stream()
+                            .map(userRole -> new RoleDTO(
                                     Optional.ofNullable(userRole.getId()),
                                     Optional.ofNullable(userRole.getVersion()),
-                                    userRole.getUser().getId(),
-                                    userRole.getUnit().getId(),
-                                    userRole.getRole().getId(),
-                                    userRole.getValidFrom(),
-                                    userRole.getValidTo()))
+                                    userRole.getRole().getName()))
                             .collect(Collectors.toList());
                     return new UserWithRolesDTO(user.getId(), user.getName(), roles);
                 })

@@ -27,7 +27,7 @@ export function Home() {
             alt="Chakra UI"
           />
           <Stack mt="6" spacing="3">
-            <Heading size="md" textAlign="center">
+            <Heading size="md" textAlign="center" color="#393c61">
               Task board
             </Heading>
             <TodoList />

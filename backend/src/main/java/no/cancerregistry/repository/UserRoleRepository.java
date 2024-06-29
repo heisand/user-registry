@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
 
-    @Query("SELECT ur FROM UserRole ur JOIN FETCH ur.user u JOIN FETCH ur.role r WHERE ur.unit.id = :unitId")
+    @Query("SELECT ur FROM UserRole ur WHERE ur.unit.id = :unitId")
     List<UserRole> findUserRolesByUnitId(Long unitId);
 
     @Query("SELECT CASE WHEN EXISTS (" +

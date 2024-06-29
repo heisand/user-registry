@@ -25,6 +25,7 @@ import { AllRoles } from "./view/AllRoles";
 import { AllUserRoles } from "./view/AllUserRoles";
 import { UsersWithRolesByUnitId } from "./view/UsersWithRolesByUnitId";
 import { ValidUserRolesByUnitAndTimestamp } from "./view/ValidUserRolesByUnitAndTimestamp";
+import { SearchBar } from "./component/SearchBar";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -63,6 +64,7 @@ function App() {
         Cancer Registry
       </Heading>
       <Box display="row" marginTop="48px" gap="12px">
+        <SearchBar/>
         <AllUsers />
         <AllUnits />
         <AllRoles />

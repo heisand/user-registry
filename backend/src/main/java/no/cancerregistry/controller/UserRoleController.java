@@ -1,6 +1,7 @@
 package no.cancerregistry.controller;
 
 import jakarta.validation.Valid;
+import no.cancerregistry.model.UserDTO;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
 import no.cancerregistry.service.UserRoleService;
@@ -22,8 +23,11 @@ public class UserRoleController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<UserRoleDTO>> getUsers() {
-        return null;
+    public ResponseEntity<List<UserRoleDTO>> getUserRoles()
+    {
+        List<UserRoleDTO> userRoles = userRoleService.getUserRoles();
+
+        return ResponseEntity.status(HttpStatus.OK).body(userRoles);
     }
 
     @GetMapping("/{id}")

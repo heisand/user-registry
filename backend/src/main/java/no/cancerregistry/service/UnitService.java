@@ -24,7 +24,7 @@ public class UnitService {
     }
 
     public List<UnitDTO> getUnits() {
-        List<Unit> units = (ArrayList<Unit>) unitRepository.findAll();
+        List<Unit> units = (List<Unit>) unitRepository.findAll();
 
         return units.stream().map(
                 unit -> new UnitDTO(

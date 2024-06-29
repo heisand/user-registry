@@ -120,6 +120,21 @@ public class UserRoleService {
                 .collect(Collectors.toList());
     }
 
+    public List<UserRoleDTO> getUserRoles() {
+        List<UserRole> users = (List<UserRole>) userRoleRepository.findAll();
+
+        return users.stream().map(
+                user -> new UserRoleDTO(
+                        Optional.ofNullable(user.getId()),
+                        Optional.ofNullable(user.getVersion()),
+                        user.getUser().getId(),
+                        user.getUnit().getId(),
+                        user.getRole().getId(),
+                        user.getValidFrom(),
+                        user.getValidTo())
+        ).collect(Collectors.toList());
+    }
+
     public boolean hasOverlappingRole(UserRole userRole) {
         return userRoleRepository.hasOverlappingUserRole(
                 userRole.getUser().getId(),

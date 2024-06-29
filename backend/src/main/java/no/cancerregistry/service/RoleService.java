@@ -24,7 +24,7 @@ public class RoleService {
     }
 
     public List<RoleDTO> getRoles() {
-        List<Role> roles = (ArrayList<Role>) roleRepository.findAll();
+        List<Role> roles = (List<Role>) roleRepository.findAll();
 
         return roles.stream().map(
                 role -> new RoleDTO(

@@ -27,7 +27,6 @@ async function postEntity(url: string, name: string) {
 }
 
 async function postUserRole(
-  name: string,
   userId: number,
   unitId: number,
   roleId: number,
@@ -42,7 +41,6 @@ async function postUserRole(
         Accept: "application/json",
       },
       body: JSON.stringify({
-        name,
         userId,
         unitId,
         roleId,
@@ -246,14 +244,13 @@ export async function deleteRole(id: number, version: number) {
 }
 
 export async function createUserRole(
-  name: string,
   userId: number,
   unitId: number,
   roleId: number,
   validFrom: string,
   validTo: string
 ) {
-  postUserRole(name, userId, unitId, roleId, validFrom, validTo);
+  postUserRole(userId, unitId, roleId, validFrom, validTo);
 }
 
 export async function updateUserRole(id: number, version: number) {

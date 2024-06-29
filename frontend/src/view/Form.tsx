@@ -63,7 +63,7 @@ export function Form(props: FormProps) {
   function handleValidTo(date: Date | null) {
     setValidTo(date);
   }
-  
+
   const isError = input === "";
 
   const getEntity = (entity: Entity): string => {
@@ -141,7 +141,6 @@ export function Form(props: FormProps) {
         switch (props.operation) {
           case Operation.Create:
             createUserRole(
-              input,
               Number.parseInt(userId),
               Number.parseInt(unitId),
               Number.parseInt(roleId),
@@ -173,19 +172,21 @@ export function Form(props: FormProps) {
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl isRequired>
-              <FormLabel>Name</FormLabel>
-              <Input
-                ref={initialRef}
-                placeholder="Name"
-                onChange={handleInputChange}
-              />
-              {!isError ? (
-                <FormHelperText>Enter the name on the entity.</FormHelperText>
-              ) : (
-                <FormErrorMessage>Name is required.</FormErrorMessage>
-              )}
-            </FormControl>
+            {props.entity !== Entity.UserRole ? (
+              <FormControl isRequired>
+                <FormLabel>Name</FormLabel>
+                <Input
+                  ref={initialRef}
+                  placeholder="Name"
+                  onChange={handleInputChange}
+                />
+                {!isError ? (
+                  <FormHelperText>Enter the name on the entity.</FormHelperText>
+                ) : (
+                  <FormErrorMessage>Name is required.</FormErrorMessage>
+                )}
+              </FormControl>
+            ) : null}
             {props.entity === Entity.UserRole ? (
               <Box marginTop="24px">
                 <FormControl isRequired>

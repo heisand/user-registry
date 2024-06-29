@@ -14,8 +14,8 @@ public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
     @Query("SELECT ur FROM UserRole ur " +
             "WHERE ur.user.id = :userId " +
             "AND ur.unit.id = :unitId " +
-            "AND :timeStamp BETWEEN ur.validFrom AND ur.validTo")
-    List<UserRole> findValidUserRoles(Long userId, Long unitId, ZonedDateTime timeStamp);
+            "AND :timestamp BETWEEN ur.validFrom AND ur.validTo")
+    List<UserRole> findValidUserRoles(Long userId, Long unitId, ZonedDateTime timestamp);
 
     @Query("SELECT ur FROM UserRole ur WHERE ur.unit.id = :unitId")
     List<UserRole> findUserRolesByUnitId(Long unitId);

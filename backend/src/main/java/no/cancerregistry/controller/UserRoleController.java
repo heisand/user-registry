@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user-roles")
@@ -24,11 +25,24 @@ public class UserRoleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserRoleDTO>> getUserRoles()
+    public ResponseEntity<?> getUserRoles(
+            @RequestParam Optional<Long> userId,
+            @RequestParam Optional<Long> unitId,
+            @RequestParam Optional<ZonedDateTime> timestamp,
+            @RequestParam Optional<Boolean> isValid)
     {
-        List<UserRoleDTO> userRoles = userRoleService.getUserRoles();
+        if (userId.isEmpty() && unitId.isEmpty() && timestamp.isEmpty() && isValid.isEmpty())  {
+            List<UserRoleDTO> userRoles = userRoleService.getUserRoles();
+            return ResponseEntity.status(HttpStatus.OK).body(userRoles);
 
-        return ResponseEntity.status(HttpStatus.OK).body(userRoles);
+        } else if (userId.isPresent() && unitId.isPresent() && timestamp.isPresent() && isValid.isPresent()) {
+            List<UserRoleDTO> validUserRoles = userRoleService.getValidUserRoles(
+                    userId.orElseThrow(), unitId.orElseThrow(), timestamp.orElseThrow());
+            return ResponseEntity.status(HttpStatus.OK).body(validUserRoles);
+
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The provided filter is not supported.");
+        }
     }
 
     @GetMapping("/{id}")
@@ -61,15 +75,5 @@ public class UserRoleController {
         List<UserWithRolesDTO> usersWithRoles = userRoleService.getUsersWithRolesByUnitId(unitId);
 
         return ResponseEntity.status(HttpStatus.OK).body(usersWithRoles);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<UserRoleDTO>> getValidUserRoles(
-            @RequestParam Long userId,
-            @RequestParam Long unitId,
-            @RequestParam ZonedDateTime timeStamp) {
-        List<UserRoleDTO> validUserRoles = userRoleService.getValidUserRoles(userId, unitId, timeStamp);
-
-        return ResponseEntity.status(HttpStatus.OK).body(validUserRoles);
     }
 }

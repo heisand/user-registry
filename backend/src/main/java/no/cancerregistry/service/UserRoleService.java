@@ -123,8 +123,8 @@ public class UserRoleService {
     public List<UserRoleDTO> getValidUserRoles(
             Long userId,
             Long unitId,
-            ZonedDateTime timeStamp) {
-        List<UserRole> validUsers = userRoleRepository.findValidUserRoles(userId, unitId, timeStamp);
+            ZonedDateTime timestamp) {
+        List<UserRole> validUsers = userRoleRepository.findValidUserRoles(userId, unitId, timestamp);
 
         return validUsers.stream().map(
                 user -> new UserRoleDTO(

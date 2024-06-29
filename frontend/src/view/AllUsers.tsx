@@ -39,7 +39,7 @@ export function AllUsers() {
       <Button
         colorScheme="brand"
         size="lg"
-        color="black"
+        color="#393c61"
         onClick={handleGetAllUsers}
       >
         Get all users

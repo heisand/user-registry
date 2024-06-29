@@ -46,6 +46,7 @@ public class UserRoleService {
                 new RuntimeException("Role not found"));
 
         UserRole userRole = new UserRole();
+        user.setVersion(1);
         userRole.setUser(user);
         userRole.setUnit(unit);
         userRole.setRole(role);

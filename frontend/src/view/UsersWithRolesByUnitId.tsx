@@ -10,22 +10,43 @@ import {
   Th,
   Tbody,
   Td,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { getUsersWithRoles } from "../api/api";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { UserWithRoles } from "../types/userwithroles";
 
 export function UsersWithRolesByUnitId() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = useRef(null);
+  const [unitId, setUnitId] = useState("");
   const [users, setUsers] = useState<UserWithRoles[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function handleGetAllUsers() {
-    fetchAllUsers();
+  const handleUnitIdtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUnitId(e.target.value);
+  };
+
+  function handleGetUsersByUnitId() {
+    if (unitId !== "") {
+      fetchUsersByUnitId();
+    }
   }
 
-  async function fetchAllUsers() {
+  async function fetchUsersByUnitId() {
     try {
-      const response = await getUsersWithRoles(1);
+      const response = await getUsersWithRoles(Number.parseInt(unitId));
       setUsers(response);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -36,14 +57,39 @@ export function UsersWithRolesByUnitId() {
 
   return (
     <Box>
-      <Button
-        colorScheme="brand"
-        size="lg"
-        color="#393c61"
-        onClick={handleGetAllUsers}
-      >
+      <Button colorScheme="brand" size="lg" color="#393c61" onClick={onOpen}>
         Get users by unit ID
       </Button>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{"Which unit ID?"}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl isRequired>
+              <FormLabel>Unit ID</FormLabel>
+              <Input
+                ref={initialRef}
+                placeholder="Unit ID"
+                type="number"
+                onChange={handleUnitIdtChange}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="brand"
+              mr={3}
+              color="#393c61"
+              onClick={handleGetUsersByUnitId}
+            >
+              OK
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       {users.length > 0 ? (
         <Box marginTop="48px">
           <Heading>Users by unit ID</Heading>

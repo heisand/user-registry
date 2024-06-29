@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 20px;
+  padding: 40px 20px;
   background-color: #393c61;
   color: white;
 }
@@ -10,7 +10,7 @@
 .navbar-logo a {
   color: white;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 32px;
 }
 
 .navbar-links {
@@ -25,7 +25,7 @@
 .navbar-links a {
   color: white;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .navbar-links a:hover {

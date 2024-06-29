@@ -19,7 +19,7 @@ public class UnitController {
         this.unitService = unitService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<UnitDTO>> getUnits() {
         List<UnitDTO> units = unitService.getUnits();
 
@@ -34,7 +34,7 @@ public class UnitController {
     }
 
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<Long> createUnit(@RequestBody UnitDTO unit) {
 
         UnitDTO savedUnit = unitService.createUnit(unit);

@@ -22,7 +22,7 @@ public class UserRoleController {
         this.userRoleService = userRoleService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<UserRoleDTO>> getUserRoles()
     {
         List<UserRoleDTO> userRoles = userRoleService.getUserRoles();

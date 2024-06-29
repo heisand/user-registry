@@ -20,7 +20,7 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping("")
+	@GetMapping
 	public ResponseEntity<List<UserDTO>> getUsers() {
 		List<UserDTO> users = userService.getUsers();
 
@@ -35,7 +35,7 @@ public class UserController {
 	}
 
 
-	@PostMapping("")
+	@PostMapping
 	public ResponseEntity<Long> createUser(@Valid @RequestBody UserDTO user) {
 
 		UserDTO savedUser = userService.createUser(user);

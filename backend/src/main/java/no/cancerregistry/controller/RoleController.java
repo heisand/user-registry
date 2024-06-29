@@ -19,7 +19,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<RoleDTO>> getRoles() {
         List<RoleDTO> roles = roleService.getRoles();
 
@@ -34,7 +34,7 @@ public class RoleController {
     }
 
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<Long> createRole(@RequestBody RoleDTO role) {
 
         RoleDTO savedRole = roleService.createRole(role);

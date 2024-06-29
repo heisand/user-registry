@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -60,5 +61,15 @@ public class UserRoleController {
         List<UserWithRolesDTO> usersWithRoles = userRoleService.getUsersWithRolesByUnitId(unitId);
 
         return ResponseEntity.status(HttpStatus.OK).body(usersWithRoles);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserRoleDTO>> getValidUserRoles(
+            @RequestParam Long userId,
+            @RequestParam Long unitId,
+            @RequestParam ZonedDateTime timeStamp) {
+        List<UserRoleDTO> validUserRoles = userRoleService.getValidUserRoles(userId, unitId, timeStamp);
+
+        return ResponseEntity.status(HttpStatus.OK).body(validUserRoles);
     }
 }

@@ -13,7 +13,9 @@ import no.cancerregistry.repository.entity.Unit;
 import no.cancerregistry.repository.entity.User;
 import no.cancerregistry.repository.entity.UserRole;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -116,6 +118,24 @@ public class UserRoleService {
                     return new UserWithRolesDTO(user.getId(), user.getName(), roles);
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<UserRoleDTO> getValidUserRoles(
+            Long userId,
+            Long unitId,
+            ZonedDateTime timeStamp) {
+        List<UserRole> validUsers = userRoleRepository.findValidUserRoles(userId, unitId, timeStamp);
+
+        return validUsers.stream().map(
+                user -> new UserRoleDTO(
+                        Optional.ofNullable(user.getId()),
+                        Optional.ofNullable(user.getVersion()),
+                        user.getUser().getId(),
+                        user.getUnit().getId(),
+                        user.getRole().getId(),
+                        user.getValidFrom(),
+                        user.getValidTo())
+        ).collect(Collectors.toList());
     }
 
     public List<UserRoleDTO> getUserRoles() {

@@ -11,16 +11,22 @@ import java.util.List;
 
 public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
 
+    @Query("SELECT ur FROM UserRole ur " +
+            "WHERE ur.user.id = :userId " +
+            "AND ur.unit.id = :unitId " +
+            "AND :timeStamp BETWEEN ur.validFrom AND ur.validTo")
+    List<UserRole> findValidUserRoles(Long userId, Long unitId, ZonedDateTime timeStamp);
+
     @Query("SELECT ur FROM UserRole ur WHERE ur.unit.id = :unitId")
     List<UserRole> findUserRolesByUnitId(Long unitId);
 
     @Query("SELECT CASE WHEN EXISTS (" +
-            "SELECT 1 FROM UserRole u " +
-            "WHERE u.user.id = :userId " +
-            "AND u.unit.id = :unitId " +
-            "AND u.role.id = :roleId " +
-            "AND (:validFrom BETWEEN u.validFrom AND u.validTo " +
-            "OR :validTo BETWEEN u.validFrom AND u.validTo)" +
+            "SELECT 1 FROM UserRole ur " +
+            "WHERE ur.user.id = :userId " +
+            "AND ur.unit.id = :unitId " +
+            "AND ur.role.id = :roleId " +
+            "AND (:validFrom BETWEEN ur.validFrom AND ur.validTo " +
+            "OR :validTo BETWEEN ur.validFrom AND ur.validTo)" +
             ") THEN true ELSE false END")
     boolean hasOverlappingUserRole(
             Long userId,

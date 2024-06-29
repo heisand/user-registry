@@ -26,6 +26,42 @@ async function postEntity(url: string, name: string) {
   }
 }
 
+async function postUserRole(
+  name: string,
+  userId: number,
+  unitId: number,
+  roleId: number,
+  validFrom: string,
+  validTo: string
+) {
+  try {
+    const response = await fetch(`${BASE_URL}/api/user-roles`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        userId,
+        unitId,
+        roleId,
+        validFrom,
+        validTo,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error posting:", error);
+  }
+}
+
 async function updateEntity(url: string, id: number, version: number) {
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
@@ -209,8 +245,15 @@ export async function deleteRole(id: number, version: number) {
   }
 }
 
-export async function createUserRole(name: string) {
-  postEntity("/api/user-roles", name);
+export async function createUserRole(
+  name: string,
+  userId: number,
+  unitId: number,
+  roleId: number,
+  validFrom: string,
+  validTo: string
+) {
+  postUserRole(name, userId, unitId, roleId, validFrom, validTo);
 }
 
 export async function updateUserRole(id: number, version: number) {

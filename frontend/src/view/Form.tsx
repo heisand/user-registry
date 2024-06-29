@@ -19,7 +19,7 @@ import React, { useState } from "react";
 import { createRole, createUnit, createUser, createUserRole } from "../api/api";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
-import { Calendar } from "../component/DatePicker";
+import { Calendar } from "../component/Calendar";
 
 type FormProps = {
   entity: Entity;
@@ -30,9 +30,40 @@ export function Form(props: FormProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const [input, setInput] = useState("");
+  const [userId, setUserId] = useState("");
+  const [unitId, setUnitId] = useState("");
+  const [roleId, setRoleId] = useState("");
+  const [validFrom, setValidFrom] = useState<Date | null>(null);
+  const [validTo, setValidTo] = useState<Date | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
     setInput(e.target.value);
+  };
+
+  const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUserId(e.target.value);
+  };
+
+  const handleUnitIdtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUnitId(e.target.value);
+  };
+
+  const handleRoleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setRoleId(e.target.value);
+  };
+
+  function handleValidFrom(date: Date | null) {
+    setValidFrom(date);
+  }
+
+  function handleValidTo(date: Date | null) {
+    setValidTo(date);
+  }
+  
   const isError = input === "";
 
   const getEntity = (entity: Entity): string => {
@@ -109,7 +140,14 @@ export function Form(props: FormProps) {
       case Entity.UserRole:
         switch (props.operation) {
           case Operation.Create:
-            createUserRole(input);
+            createUserRole(
+              input,
+              Number.parseInt(userId),
+              Number.parseInt(unitId),
+              Number.parseInt(roleId),
+              validFrom?.toISOString() ?? "",
+              validTo?.toISOString() ?? ""
+            );
             break;
           case Operation.Update:
             //updateUserRole();
@@ -154,8 +192,9 @@ export function Form(props: FormProps) {
                   <FormLabel>User ID</FormLabel>
                   <Input
                     ref={initialRef}
-                    placeholder="Name"
-                    onChange={handleInputChange}
+                    placeholder="User ID"
+                    type="number"
+                    onChange={handleUserIdChange}
                   />
                   {!isError ? (
                     <FormHelperText>
@@ -164,13 +203,14 @@ export function Form(props: FormProps) {
                   ) : (
                     <FormErrorMessage>Name is required.</FormErrorMessage>
                   )}
-                </FormControl >
+                </FormControl>
                 <FormControl isRequired marginTop="24px">
                   <FormLabel>Unit ID</FormLabel>
                   <Input
                     ref={initialRef}
-                    placeholder="Name"
-                    onChange={handleInputChange}
+                    placeholder="Unit ID"
+                    type="number"
+                    onChange={handleUnitIdtChange}
                   />
                   {!isError ? (
                     <FormHelperText>
@@ -184,8 +224,9 @@ export function Form(props: FormProps) {
                   <FormLabel>Role ID</FormLabel>
                   <Input
                     ref={initialRef}
-                    placeholder="Name"
-                    onChange={handleInputChange}
+                    placeholder="Role ID"
+                    type="number"
+                    onChange={handleRoleIdChange}
                   />
                   {!isError ? (
                     <FormHelperText>
@@ -196,9 +237,9 @@ export function Form(props: FormProps) {
                   )}
                 </FormControl>
                 <FormLabel marginTop="24px">Valid from</FormLabel>
-                <Calendar />
+                <Calendar handleDate={handleValidFrom} />
                 <FormLabel marginTop="24px">Valid to</FormLabel>
-                <Calendar />
+                <Calendar handleDate={handleValidTo} />
               </Box>
             ) : null}
           </ModalBody>

@@ -4,9 +4,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-export const Calendar = () => {
+type CalendarProps = {
+  handleDate: (date: Date | null) => void
+}
+
+export const Calendar = (props: CalendarProps) => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+    <DatePicker selected={startDate} onChange={(date) => {
+      props.handleDate(date)
+      setStartDate(date)}} />
   );
 };

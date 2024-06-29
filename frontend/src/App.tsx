@@ -24,6 +24,7 @@ import { AllUnits } from "./view/AllUnits";
 import { AllRoles } from "./view/AllRoles";
 import { AllUserRoles } from "./view/AllUserRoles";
 import { UsersWithRolesByUnitId } from "./view/UsersWithRolesByUnitId";
+import { ValidUserRolesByUnitAndTimestamp } from "./view/ValidUserRolesByUnitAndTimestamp";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -61,11 +62,14 @@ function App() {
       <Heading as="h1" textAlign="center">
         Cancer Registry
       </Heading>
-      <AllUsers />
-      <AllUnits />
-      <AllRoles />
-      <AllUserRoles />
-      <UsersWithRolesByUnitId />
+      <Box display="row" marginTop="48px" gap="12px">
+        <AllUsers />
+        <AllUnits />
+        <AllRoles />
+        <AllUserRoles />
+        <UsersWithRolesByUnitId />
+        <ValidUserRolesByUnitAndTimestamp />
+      </Box>
       <FormButtons />
     </Box>
   );

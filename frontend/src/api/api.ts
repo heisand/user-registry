@@ -133,6 +133,28 @@ export async function getUsersWithRoles(unitId: number) {
   return users;
 }
 
+export async function getValidUsers(
+  userId: number,
+  unitId: number,
+  timestamp: string
+) {
+  const response = await fetch(
+    `${BASE_URL}/api/user-roles?userId=${userId}&unitId=${unitId}&timestamp=${timestamp}&isValid=true`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
+  if (!response.ok) {
+    console.error("Error fetching", response.status, await response.text());
+    return [];
+  }
+  const users: UserRole[] = await response.json();
+  return users;
+}
+
 export async function getUnits() {
   const response = await fetch(`${BASE_URL}/api/units`, {
     method: "GET",

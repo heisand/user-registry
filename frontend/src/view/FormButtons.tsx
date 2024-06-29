@@ -9,7 +9,7 @@ export function FormButtons() {
       display="flex"
       flexDirection="row"
       gap="48px"
-      marginTop="48px"
+      marginTop="56px"
       justifyContent="center"
     >
       <Box display="flex" flexDirection="column" gap="24px" alignItems="center">

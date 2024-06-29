@@ -10,6 +10,7 @@ type CalendarProps = {
 
 export const Calendar = (props: CalendarProps) => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
+  props.handleDate(startDate)
   return (
     <DatePicker
       selected={startDate}

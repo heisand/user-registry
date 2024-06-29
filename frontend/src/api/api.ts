@@ -134,12 +134,12 @@ export async function getUsersWithRoles(unitId: number) {
 }
 
 export async function getValidUsers(
-  userId: number,
   unitId: number,
+  userId: number,
   timestamp: string
 ) {
   const response = await fetch(
-    `${BASE_URL}/api/user-roles?userId=${userId}&unitId=${unitId}&timestamp=${timestamp}&isValid=true`,
+    `${BASE_URL}/api/user-roles?unitId=${unitId}&userId=${userId}&timestamp=${timestamp}&isValid=true`,
     {
       method: "GET",
       headers: {

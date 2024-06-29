@@ -2,6 +2,7 @@ import { Role } from "../types/role";
 import { Unit } from "../types/unit";
 import { User } from "../types/user";
 import { UserRole } from "../types/userrole";
+import { UserWithRoles } from "../types/userwithroles";
 import { BASE_URL } from "../utils/baseurl";
 
 async function postEntity(url: string, name: string) {
@@ -111,6 +112,24 @@ export async function getUsers() {
     return [];
   }
   const users: User[] = await response.json();
+  return users;
+}
+
+export async function getUsersWithRoles(unitId: number) {
+  const response = await fetch(
+    `${BASE_URL}/api/user-roles/units/${unitId}/users-with-roles`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
+  if (!response.ok) {
+    console.error("Error fetching", response.status, await response.text());
+    return [];
+  }
+  const users: UserWithRoles[] = await response.json();
   return users;
 }
 

@@ -23,6 +23,7 @@ import { AllUsers } from "./view/AllUsers";
 import { AllUnits } from "./view/AllUnits";
 import { AllRoles } from "./view/AllRoles";
 import { AllUserRoles } from "./view/AllUserRoles";
+import { UsersWithRolesByUnitId } from "./view/UsersWithRolesByUnitId";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -60,10 +61,11 @@ function App() {
       <Heading as="h1" textAlign="center">
         Cancer Registry
       </Heading>
-      <AllUsers/>
-      <AllUnits/>
-      <AllRoles/>
-      <AllUserRoles/>
+      <AllUsers />
+      <AllUnits />
+      <AllRoles />
+      <AllUserRoles />
+      <UsersWithRolesByUnitId />
       <FormButtons />
     </Box>
   );

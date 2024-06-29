@@ -1,7 +1,9 @@
 export type UserRole = {
   id: number;
   version: number;
-  name: string;
+  userId: number;
+  unitId: number;
+  roleId: number;
   validFrom: string;
   validTo: string;
 };

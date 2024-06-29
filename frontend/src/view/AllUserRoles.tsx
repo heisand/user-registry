@@ -52,7 +52,11 @@ export function AllUserRoles() {
                   <Tr>
                     <Th>ID</Th>
                     <Th>Version</Th>
-                    <Th>Name</Th>
+                    <Th>UserId</Th>
+                    <Th>UnitID</Th>
+                    <Th>RoleId</Th>
+                    <Th>ValidFrom</Th>
+                    <Th>ValidTo</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -60,7 +64,11 @@ export function AllUserRoles() {
                     <Tr key={user.id}>
                       <Td>{user.id}</Td>
                       <Td>{user.version}</Td>
-                      <Td>{user.name}</Td>
+                      <Td>{user.userId}</Td>
+                      <Td>{user.unitId}</Td>
+                      <Td>{user.roleId}</Td>
+                      <Td>{user.validFrom}</Td>
+                      <Td>{user.validTo}</Td>
                     </Tr>
                   ))}
                 </Tbody>

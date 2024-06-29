@@ -31,15 +31,17 @@ public class UserRoleController {
             @RequestParam Optional<ZonedDateTime> timestamp,
             @RequestParam Optional<Boolean> isValid)
     {
+        if (!isValid.orElse(true)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The provided filter is not supported.");
+        }
+
         if (userId.isEmpty() && unitId.isEmpty() && timestamp.isEmpty() && isValid.isEmpty())  {
             List<UserRoleDTO> userRoles = userRoleService.getUserRoles();
             return ResponseEntity.status(HttpStatus.OK).body(userRoles);
-
         } else if (userId.isPresent() && unitId.isPresent() && timestamp.isPresent() && isValid.isPresent()) {
             List<UserRoleDTO> validUserRoles = userRoleService.getValidUserRoles(
                     userId.orElseThrow(), unitId.orElseThrow(), timestamp.orElseThrow());
             return ResponseEntity.status(HttpStatus.OK).body(validUserRoles);
-
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The provided filter is not supported.");
         }

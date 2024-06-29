@@ -11,9 +11,8 @@ import {
   Tbody,
   Td,
 } from "@chakra-ui/react";
-import { getRoles, getUsers } from "../api/api";
-import { User } from "../types/user";
-import { useEffect, useState } from "react";
+import { getRoles } from "../api/api";
+import { useState } from "react";
 import { Role } from "../types/role";
 
 export function AllRoles() {
@@ -37,7 +36,12 @@ export function AllRoles() {
 
   return (
     <Box>
-      <Button colorScheme="teal" size="lg" onClick={handleGetAllUsers}>
+      <Button
+        colorScheme="brand"
+        size="lg"
+        color="#393c61"
+        onClick={handleGetAllUsers}
+      >
         Get all roles
       </Button>
       {users.length > 0 ? (
@@ -47,7 +51,7 @@ export function AllRoles() {
             <Spinner size="xl" />
           ) : (
             <TableContainer>
-              <Table colorScheme="teal">
+              <Table colorScheme="brand">
                 <Thead>
                   <Tr>
                     <Th>ID</Th>

@@ -37,7 +37,7 @@ export function AllUserRoles() {
 
   return (
     <Box>
-      <Button colorScheme="teal" size="lg" onClick={handleGetAllUsers}>
+      <Button colorScheme="brand" size="lg" color="#393c61" onClick={handleGetAllUsers}>
         Get all user roles
       </Button>
       {users.length > 0 ? (
@@ -47,7 +47,7 @@ export function AllUserRoles() {
             <Spinner size="xl" />
           ) : (
             <TableContainer>
-              <Table colorScheme="teal">
+              <Table colorScheme="brand">
                 <Thead>
                   <Tr>
                     <Th>ID</Th>

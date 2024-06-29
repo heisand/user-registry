@@ -163,7 +163,7 @@ export function Form(props: FormProps) {
 
   return (
     <>
-      <Button colorScheme="teal" size="lg" onClick={onOpen}>
+      <Button colorScheme="brand" size="lg" color="#393c61" onClick={onOpen}>
         {title}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -246,7 +246,7 @@ export function Form(props: FormProps) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onSave}>
+            <Button colorScheme="brand" mr={3} color="#393c61" onClick={onSave}>
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>

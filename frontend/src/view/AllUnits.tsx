@@ -11,9 +11,8 @@ import {
   Tbody,
   Td,
 } from "@chakra-ui/react";
-import { getUnits, getUsers } from "../api/api";
-import { User } from "../types/user";
-import { useEffect, useState } from "react";
+import { getUnits } from "../api/api";
+import { useState } from "react";
 import { Unit } from "../types/unit";
 
 export function AllUnits() {
@@ -37,7 +36,12 @@ export function AllUnits() {
 
   return (
     <Box>
-      <Button colorScheme="teal" size="lg" onClick={handleGetAllUsers}>
+      <Button
+        colorScheme="brand"
+        size="lg"
+        color="#393c61"
+        onClick={handleGetAllUsers}
+      >
         Get all units
       </Button>
       {users.length > 0 ? (
@@ -47,7 +51,7 @@ export function AllUnits() {
             <Spinner size="xl" />
           ) : (
             <TableContainer>
-              <Table colorScheme="teal">
+              <Table colorScheme="brand">
                 <Thead>
                   <Tr>
                     <Th>ID</Th>

@@ -59,6 +59,6 @@ public class UserRoleController {
     public ResponseEntity<List<UserWithRolesDTO>> getUsersWithRolesByUnitId(@PathVariable Long unitId) {
         List<UserWithRolesDTO> usersWithRoles = userRoleService.getUsersWithRolesByUnitId(unitId);
 
-        return ResponseEntity.ok(usersWithRoles);
+        return ResponseEntity.status(HttpStatus.OK).body(usersWithRoles);
     }
 }

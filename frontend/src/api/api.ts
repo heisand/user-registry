@@ -318,6 +318,6 @@ export async function updateUserRole(
   updateEntity(`/api/user-roles/${id}`, id, version, name);
 }
 
-export async function deleteUseRole(id: string, version: string) {
+export async function deleteUserRole(id: string, version: string) {
   deleteEntity(`/api/user-roles/${id}`, id, version);
 }

@@ -24,6 +24,7 @@ import {
   deleteRole,
   deleteUnit,
   deleteUser,
+  deleteUserRole,
   updateRole,
   updateUnit,
   updateUser,
@@ -163,7 +164,7 @@ export function Form(props: FormProps) {
             if(!isMissingId && !isMissingVersion && !isMissingName) updateUnit(id, version, input);
             break;
           case Operation.Delete:
-            if(!isMissingId && !isMissingVersion) deleteUnit(id, version);
+            if(!isMissingId) deleteUnit(id, version);
             break;
         }
         break;
@@ -176,7 +177,7 @@ export function Form(props: FormProps) {
             if(!isMissingId && !isMissingVersion && !isMissingName) updateRole(id, version, input);
             break;
           case Operation.Delete:
-            if(!isMissingId && !isMissingVersion) deleteRole(id, version);
+            if(!isMissingId) deleteRole(id, version);
             break;
         }
         break;
@@ -196,7 +197,7 @@ export function Form(props: FormProps) {
             //updateUserRole();
             break;
           case Operation.Delete:
-            //deleteUserRole();
+            deleteUserRole(id, version);
             break;
         }
         break;
@@ -262,7 +263,7 @@ export function Form(props: FormProps) {
                 />
               </FormControl>
             ) : null}
-            {props.entity === Entity.UserRole ? (
+            {props.entity === Entity.UserRole && props.operation !== Operation.Delete ? (
               <Box marginTop="24px">
                 <FormControl isRequired>
                   <FormLabel>User ID</FormLabel>

@@ -63,8 +63,8 @@ public class UserRoleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserRoleDTO> updateUser(@Valid @RequestBody UserRoleDTO userRole) {
-        userRoleService.updateUserRole(userRole);
+    public ResponseEntity<UserRoleDTO> updateUser(@Valid @RequestBody UserRoleDTO userRole, @PathVariable Long id) {
+        userRoleService.updateUserRole(id, userRole);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

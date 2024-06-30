@@ -8,7 +8,6 @@ import no.cancerregistry.repository.UserRepository;
 import no.cancerregistry.repository.entity.User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,23 +26,23 @@ public class UserService {
         List<User> users;
 
             if (name.isPresent() && unitId.isPresent() && roleId.isPresent()) {
-                users = userRepository.findUserBydUnitIdRoleIdAndName(
+                users = userRepository.findUsersBydUnitIdRoleIdAndName(
                         unitId.orElseThrow(), roleId.orElseThrow(), name.orElseThrow());
             } else if (unitId.isPresent() && roleId.isPresent()) {
-                users = userRepository.findUserByUnitIdAndRoleId(
+                users = userRepository.findUsersByUnitIdAndRoleId(
                         unitId.orElseThrow(), roleId.orElseThrow());
             } else if (unitId.isPresent() && name.isPresent()) {
-                users = userRepository.findUserByUnitIdAndName(
+                users = userRepository.findUsersByUnitIdAndName(
                         unitId.orElseThrow(), name.orElseThrow());
             } else if (roleId.isPresent() && name.isPresent()) {
-                users = userRepository.findUserByRoleIdAndName(
+                users = userRepository.findUsersByRoleIdAndName(
                         roleId.orElseThrow(), name.orElseThrow());
             } else if (unitId.isPresent()) {
-                users = userRepository.findUserByUnitId(unitId.orElseThrow());
+                users = userRepository.findUsersByUnitId(unitId.orElseThrow());
             } else if (roleId.isPresent()) {
-                users = userRepository.findUserByRoleId(roleId.orElseThrow());
+                users = userRepository.findUsersByRoleId(roleId.orElseThrow());
             } else if (name.isPresent()) {
-                users = userRepository.findUserByName(name.orElseThrow());
+                users = userRepository.findUsersByName(name.orElseThrow());
             } else {
                 users = (List<User>) userRepository.findAll();
             }

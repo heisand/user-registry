@@ -8,7 +8,6 @@ import no.cancerregistry.repository.RoleRepository;
 import no.cancerregistry.repository.entity.Role;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,8 +22,14 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public List<RoleDTO> getRoles() {
-        List<Role> roles = (List<Role>) roleRepository.findAll();
+    public List<RoleDTO> getRoles(Optional<String> name) {
+        List<Role> roles;
+
+        if (name.isPresent()) {
+            roles = roleRepository.findRolesByName(name.orElseThrow());
+        } else {
+            roles = (List<Role>) roleRepository.findAll();
+        }
 
         return roles.stream().map(
                 role -> new RoleDTO(

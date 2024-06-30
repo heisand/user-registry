@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/roles")
@@ -20,8 +21,8 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoleDTO>> getRoles() {
-        List<RoleDTO> roles = roleService.getRoles();
+    public ResponseEntity<List<RoleDTO>> getRoles(@RequestParam Optional<String> name) {
+        List<RoleDTO> roles = roleService.getRoles(name);
 
         return ResponseEntity.status(HttpStatus.OK).body(roles);
     }

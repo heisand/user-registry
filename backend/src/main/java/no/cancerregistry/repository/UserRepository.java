@@ -9,24 +9,24 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.name LIKE %:name%")
-    List<User> findUserByName(String name);
+    List<User> findUsersByName(String name);
 
     @Query("SELECT u FROM UserRole ur JOIN ur.user u WHERE ur.unit.id = :unitId")
-    List<User> findUserByUnitId(Long unitId);
+    List<User> findUsersByUnitId(Long unitId);
 
     @Query("SELECT u FROM UserRole ur JOIN ur.user u WHERE ur.role.id = :roleId")
-    List<User> findUserByRoleId(Long roleId);
+    List<User> findUsersByRoleId(Long roleId);
 
     @Query("SELECT u FROM UserRole ur JOIN ur.user u WHERE ur.unit.id = :unitId AND ur.role.id = :roleId")
-    List<User> findUserByUnitIdAndRoleId(Long unitId, Long roleId);
+    List<User> findUsersByUnitIdAndRoleId(Long unitId, Long roleId);
 
     @Query("SELECT u FROM UserRole ur JOIN ur.user u WHERE ur.unit.id = :unitId AND u.name LIKE %:name%")
-    List<User> findUserByUnitIdAndName(Long unitId, String name);
+    List<User> findUsersByUnitIdAndName(Long unitId, String name);
 
     @Query("SELECT u FROM UserRole ur JOIN ur.user u WHERE ur.unit.id = :unitId AND u.name LIKE %:name%")
-    List<User> findUserByRoleIdAndName(Long unitId, String name);
+    List<User> findUsersByRoleIdAndName(Long unitId, String name);
 
     @Query("SELECT u FROM UserRole ur JOIN ur.user u WHERE ur.unit.id = :unitId AND ur.role.id = :roleId AND u.name LIKE %:name%")
-    List<User> findUserBydUnitIdRoleIdAndName(Long unitId, Long roleId, String name);
+    List<User> findUsersBydUnitIdRoleIdAndName(Long unitId, Long roleId, String name);
 }
 

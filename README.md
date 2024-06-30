@@ -50,12 +50,22 @@ npm install
 
 ## Usage
 
-### Backend (WIP)
+### Backend
 
+```bash
+# Navigate to the backend directory
+cd cancer-registry/backend
+
+# Run
+./gradlew bootRun
+```
 
 ### Frontend
 
 ```bash
+# Navigate to the frontend directory
+cd cancer-registry/frontend
+
 # Run
 npm run dev
 ```

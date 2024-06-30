@@ -29,6 +29,7 @@ import { Operation } from "../types/operation";
 import React, { useState, useRef } from "react";
 import { getUsers } from "../api/api";
 import { User } from "../types/user";
+import { UsersWithRolesByUnitId } from "../view/UsersWithRolesByUnitId";
 
 export function Users() {
   return (
@@ -49,8 +50,11 @@ export function Users() {
         <Form entity={Entity.User} operation={Operation.Update} />
         <Form entity={Entity.User} operation={Operation.Delete} />
       </Box>
+      <Box display="flex" flexDirection="column" gap="48px">
       <SearchForUser />
+      <UsersWithRolesByUnitId />
       <AllUsers />
+      </Box>
     </>
   );
 
@@ -98,7 +102,7 @@ export function Users() {
     }
 
     return (
-      <Box marginTop="48px" marginBottom="48px">
+      <Box>
         <Button colorScheme="brand" size="lg" color="#393c61" onClick={onOpen}>
           Search for users
         </Button>

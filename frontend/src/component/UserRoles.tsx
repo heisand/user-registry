@@ -33,7 +33,6 @@ export function UserRoles() {
         <UserRolesByUnitId />
         <UserRolesByRoleId />
         <UserRolesByVersion />
-        <UsersWithRolesByUnitId />
         <ValidUserRolesByUnitAndTimestamp />
       </Box>
     </>

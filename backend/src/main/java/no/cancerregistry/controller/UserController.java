@@ -53,9 +53,7 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserDTO> updateUser(
-			@PathVariable("id") Long id, @Valid @RequestBody UserDTO user) {
-		// TODO: Validate request better for version
+	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserDTO user) {
 		userService.updateUser(id, user);
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

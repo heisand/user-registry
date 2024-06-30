@@ -1,5 +1,6 @@
 package no.cancerregistry.service;
 
+import no.cancerregistry.exception.FilterNotSupportedException;
 import no.cancerregistry.exception.OverlappingRoleException;
 import no.cancerregistry.model.RoleDTO;
 import no.cancerregistry.model.UserRoleDTO;
@@ -13,7 +14,6 @@ import no.cancerregistry.repository.entity.Unit;
 import no.cancerregistry.repository.entity.User;
 import no.cancerregistry.repository.entity.UserRole;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -120,38 +120,47 @@ public class UserRoleService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserRoleDTO> getValidUserRoles(
-            Long userId,
-            Long unitId,
-            ZonedDateTime timestamp) {
-        List<UserRole> validUsers = userRoleRepository.findValidUserRoles(userId, unitId, timestamp);
+    public List<UserRoleDTO> getUserRoles(
+            Optional<Long> unitId,
+            Optional<Long> userId,
+            Optional<Long> roleId,
+            Optional<Integer> version,
+            Optional<ZonedDateTime> timestamp,
+            Optional<Boolean> isValid) {
 
-        return validUsers.stream().map(
-                user -> new UserRoleDTO(
-                        Optional.ofNullable(user.getId()),
-                        Optional.ofNullable(user.getVersion()),
-                        user.getUser().getId(),
-                        user.getUnit().getId(),
-                        user.getRole().getId(),
-                        user.getValidFrom(),
-                        user.getValidTo())
-        ).collect(Collectors.toList());
-    }
+        List<UserRole> userRoles;
 
-    public List<UserRoleDTO> getUserRoles() {
-        List<UserRole> users = (List<UserRole>) userRoleRepository.findAll();
+        if (unitId.isEmpty() && userId.isEmpty() && timestamp.isEmpty() && isValid.isEmpty()) {
+            userRoles = (List<UserRole>) userRoleRepository.findAll();
+        } else if (userId.isPresent() && unitId.isPresent() && timestamp.isPresent() && isValid.isPresent()) {
+            userRoles = userRoleRepository.findValidUserRoles(
+                    userId.orElseThrow(), unitId.orElseThrow(), timestamp.orElseThrow());
+        } else if (userId.isPresent()) {
+            userRoles = userRoleRepository.findUserRolesByUserId(userId.orElseThrow());
+        } else if (unitId.isPresent()) {
+            userRoles = userRoleRepository.findUserRolesByUnitId(unitId.orElseThrow());
+        } else if (roleId.isPresent()) {
+            userRoles = userRoleRepository.findUserRolesByRoleId(roleId.orElseThrow());
+        } else if (version.isPresent()) {
+            userRoles = userRoleRepository.findUserRolesByVersion(version.orElseThrow());
+        } else if (timestamp.isPresent()) {
+            // TODO: Get by timestamp
+            userRoles = (List<UserRole>) userRoleRepository.findAll();
+        } else {
+            throw new FilterNotSupportedException("The provided filter is not supported");
+        }
 
-        return users.stream().map(
-                user -> new UserRoleDTO(
-                        Optional.ofNullable(user.getId()),
-                        Optional.ofNullable(user.getVersion()),
-                        user.getUser().getId(),
-                        user.getUnit().getId(),
-                        user.getRole().getId(),
-                        user.getValidFrom(),
-                        user.getValidTo())
-        ).collect(Collectors.toList());
-    }
+            return userRoles.stream().map(
+                    user -> new UserRoleDTO(
+                            Optional.ofNullable(user.getId()),
+                            Optional.ofNullable(user.getVersion()),
+                            user.getUser().getId(),
+                            user.getUnit().getId(),
+                            user.getRole().getId(),
+                            user.getValidFrom(),
+                            user.getValidTo())
+            ).collect(Collectors.toList());
+        }
 
     public boolean hasOverlappingRole(UserRole userRole) {
         return userRoleRepository.hasOverlappingUserRole(

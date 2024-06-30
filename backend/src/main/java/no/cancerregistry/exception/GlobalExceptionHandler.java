@@ -28,6 +28,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(FilterNotSupportedException.class)
+    public ResponseEntity<String> handleOverlappingRoleException(FilterNotSupportedException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -27,6 +27,8 @@ public class UserRoleController {
     public ResponseEntity<?> getUserRoles(
             @RequestParam Optional<Long> unitId,
             @RequestParam Optional<Long> userId,
+            @RequestParam Optional<Long> roleId,
+            @RequestParam Optional<Integer> version,
             @RequestParam Optional<ZonedDateTime> timestamp,
             @RequestParam Optional<Boolean> isValid)
     {
@@ -34,16 +36,16 @@ public class UserRoleController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The provided filter is not supported.");
         }
 
-        if (unitId.isEmpty() && userId.isEmpty() && timestamp.isEmpty() && isValid.isEmpty())  {
-            List<UserRoleDTO> userRoles = userRoleService.getUserRoles();
-            return ResponseEntity.status(HttpStatus.OK).body(userRoles);
-        } else if (userId.isPresent() && unitId.isPresent() && timestamp.isPresent() && isValid.isPresent()) {
-            List<UserRoleDTO> validUserRoles = userRoleService.getValidUserRoles(
-                    userId.orElseThrow(), unitId.orElseThrow(), timestamp.orElseThrow());
-            return ResponseEntity.status(HttpStatus.OK).body(validUserRoles);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The provided filter is not supported.");
-        }
+        List<UserRoleDTO> userRoles = userRoleService.getUserRoles(
+                unitId,
+                userId,
+                roleId,
+                version,
+                timestamp,
+                isValid
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(userRoles);
     }
 
     @GetMapping("/{id}")

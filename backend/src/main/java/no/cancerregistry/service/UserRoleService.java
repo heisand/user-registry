@@ -75,29 +75,19 @@ public class UserRoleService {
     }
 
     public UserRole updateUserRole(UserRoleDTO userRoleDTO) {
-        User user = userRepository.findById(userRoleDTO.getUserId()).orElseThrow(() ->
-                new RuntimeException("User not found"));
-        Unit unit = unitRepository.findById(userRoleDTO.getUnitId()).orElseThrow(() ->
-                new RuntimeException("Unit not found"));
-        Role role = roleRepository.findById(userRoleDTO.getRoleId()).orElseThrow(() ->
-                new RuntimeException("Role not found"));
+       UserRole existingRole = userRoleRepository.findById(userRoleDTO.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User role with id " + userRoleDTO.getUserId() + " does not exist."));
 
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setUnit(unit);
-        userRole.setRole(role);
+        // Only the valid from and valid to timestamps can be changed
+        existingRole.setValidFrom(userRoleDTO.getValidFrom());
+        existingRole.setValidTo(userRoleDTO.getValidTo());
 
-        if (hasOverlappingRole(userRole)) {
+        if (hasOverlappingRole(existingRole)) {
             throw new OverlappingRoleException("A valid user role already exists");
         }
 
-        UserRole userRoleToSave = new UserRole();
-
-        // Only the valid from and valid to timestamps can be changed
-        userRoleToSave.setValidFrom(userRoleDTO.getValidFrom());
-        userRoleToSave.setValidTo(userRoleDTO.getValidTo());
-
-        return userRoleRepository.save(userRoleToSave);
+        return userRoleRepository.save(existingRole);
     }
 
 

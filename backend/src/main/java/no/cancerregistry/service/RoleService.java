@@ -88,11 +88,10 @@ public class RoleService {
                             "Found: " + roleDTO.getVersion());
         }
 
-        Role role = new Role();
-        role.setName(roleDTO.getName());
-        role.setVersion(unwrappedVersion + 1);
+        existingRole.setName(roleDTO.getName());
+        existingRole.setVersion(unwrappedVersion + 1);
 
-        roleRepository.save(role);
+        roleRepository.save(existingRole);
     }
 
     public void deleteRole(Long id) {

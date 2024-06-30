@@ -109,11 +109,10 @@ public class UserService {
                             "Found: " + userDTO.getVersion());
         }
 
-        User user = new User();
-        user.setName(userDTO.getName());
-        user.setVersion(unwrappedVersion + 1);
+        existingUser.setName(userDTO.getName());
+        existingUser.setVersion(unwrappedVersion + 1);
 
-        userRepository.save(user);
+        userRepository.save(existingUser);
     }
 
     public void deleteUser(Long id) {

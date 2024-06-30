@@ -93,11 +93,10 @@ public class UnitService {
                             "Found: " + unitDTO.getVersion());
         }
 
-        Unit unit = new Unit();
-        unit.setName(unitDTO.getName());
-        unit.setVersion(unwrappedVersion + 1);
+        existingUnit.setName(unitDTO.getName());
+        existingUnit.setVersion(unwrappedVersion + 1);
 
-        unitRepository.save(unit);
+        unitRepository.save(existingUnit);
     }
 
     public void deleteUnit(Long id) {

@@ -23,8 +23,30 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<UserDTO> getUsers() {
-        List<User> users = (List<User>) userRepository.findAll();
+    public List<UserDTO> getUsers(Optional<String> name, Optional<Long> unitId, Optional<Long> roleId) {
+        List<User> users;
+
+            if (name.isPresent() && unitId.isPresent() && roleId.isPresent()) {
+                users = userRepository.findUserBydUnitIdRoleIdAndName(
+                        unitId.orElseThrow(), roleId.orElseThrow(), name.orElseThrow());
+            } else if (unitId.isPresent() && roleId.isPresent()) {
+                users = userRepository.findUserByUnitIdAndRoleId(
+                        unitId.orElseThrow(), roleId.orElseThrow());
+            } else if (unitId.isPresent() && name.isPresent()) {
+                users = userRepository.findUserByUnitIdAndName(
+                        unitId.orElseThrow(), name.orElseThrow());
+            } else if (roleId.isPresent() && name.isPresent()) {
+                users = userRepository.findUserByRoleIdAndName(
+                        roleId.orElseThrow(), name.orElseThrow());
+            } else if (unitId.isPresent()) {
+                users = userRepository.findUserByUnitId(unitId.orElseThrow());
+            } else if (roleId.isPresent()) {
+                users = userRepository.findUserByRoleId(roleId.orElseThrow());
+            } else if (name.isPresent()) {
+                users = userRepository.findUserByName(name.orElseThrow());
+            } else {
+                users = (List<User>) userRepository.findAll();
+            }
 
         return users.stream().map(
                 user -> new UserDTO(

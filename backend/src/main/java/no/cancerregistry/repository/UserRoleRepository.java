@@ -14,7 +14,7 @@ public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
     @Query("SELECT ur FROM UserRole ur " +
             "WHERE ur.user.id = :userId " +
             "AND ur.unit.id = :unitId " +
-            "AND :timestamp BETWEEN ur.validFrom AND ur.validTo")
+            "AND (:timestamp BETWEEN ur.validFrom AND COALESCE(ur.validTo, :timestamp))")
     List<UserRole> findValidUserRoles(Long userId, Long unitId, ZonedDateTime timestamp);
 
     @Query("SELECT ur FROM UserRole ur WHERE ur.user.id = :userId")
@@ -34,8 +34,8 @@ public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
             "WHERE ur.user.id = :userId " +
             "AND ur.unit.id = :unitId " +
             "AND ur.role.id = :roleId " +
-            "AND (:validFrom BETWEEN ur.validFrom AND ur.validTo " +
-            "OR :validTo BETWEEN ur.validFrom AND ur.validTo)" +
+            "AND (:validFrom BETWEEN ur.validFrom AND COALESCE(ur.validTo, :validFrom) " +
+            "OR :validTo BETWEEN ur.validFrom AND COALESCE(ur.validTo, :validTo))" +
             ") THEN true ELSE false END")
     boolean hasOverlappingUserRole(
             Long userId,

@@ -206,13 +206,37 @@ export async function getRoles() {
   return users;
 }
 
-export async function getUserRoles() {
-  const response = await fetch(`${BASE_URL}/api/user-roles`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  });
+export async function getUserRoles(
+  userId: string | undefined = undefined,
+  unitId: string | undefined = undefined,
+  roleId: string | undefined = undefined,
+  version: string | undefined = undefined
+) {
+  const params = new URLSearchParams();
+
+  if (userId !== undefined) {
+    params.append("userId", userId);
+  }
+  if (unitId !== undefined) {
+    params.append("unitId", unitId);
+  }
+  if (roleId !== undefined) {
+    params.append("roleId", roleId);
+  }
+  if (version !== undefined) {
+    params.append("roleId", version);
+  }
+  const queryString = params.toString();
+
+  const response = await fetch(
+    `${BASE_URL}/api/user-roles${queryString ? `?${queryString}` : ""}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
   if (!response.ok) {
     console.error("Error fetching", response.status, await response.text());
     return [];

@@ -5,6 +5,10 @@ import { Operation } from "../types/operation";
 import { AllUserRoles } from "../view/AllUserRoles";
 import { UsersWithRolesByUnitId } from "../view/UsersWithRolesByUnitId";
 import { ValidUserRolesByUnitAndTimestamp } from "../view/ValidUserRolesByUnitAndTimestamp";
+import { UserRolesByUserId } from "../view/UserRolesByUserId";
+import { UserRolesByRoleId } from "../view/UserRolesByRoleId";
+import { UserRolesByUnitId } from "../view/UserRolesByUnitId";
+import { UserRolesByVersion } from "../view/UserRolesByVersion";
 
 export function UserRoles() {
   return (
@@ -25,6 +29,10 @@ export function UserRoles() {
       </Box>
       <Box display="flex" flexDirection="column" gap="48px">
         <AllUserRoles />
+        <UserRolesByUserId />
+        <UserRolesByUnitId />
+        <UserRolesByRoleId />
+        <UserRolesByVersion />
         <UsersWithRolesByUnitId />
         <ValidUserRolesByUnitAndTimestamp />
       </Box>

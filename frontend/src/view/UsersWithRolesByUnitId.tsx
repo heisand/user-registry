@@ -58,7 +58,7 @@ export function UsersWithRolesByUnitId() {
   return (
     <Box>
       <Button colorScheme="brand" size="lg" color="#393c61" onClick={onOpen}>
-        Get users by unit ID
+        Get users with roles by unit ID
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />

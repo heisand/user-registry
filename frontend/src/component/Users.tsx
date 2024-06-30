@@ -68,17 +68,14 @@ export function Users() {
     const [loading, setLoading] = useState(true);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
       setName(e.target.value);
     };
 
     const handleUnitIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
       setUnitId(e.target.value);
     };
 
     const handleRoleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
       setRoleId(e.target.value);
     };
 

@@ -30,26 +30,25 @@ import {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const [roleId, setRoleId] = useState("");
-    const [users, setUsers] = useState<UserRole[]>([]);
+    const [userRoles, setUserRoles] = useState<UserRole[]>([]);
     const [loading, setLoading] = useState(true);
   
-    const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
+    const handleRoleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setRoleId(e.target.value);
     };
   
-    function handleGetUsers() {
+    function handleGetUserRoles() {
       if (roleId !== "") {
-        fetchUsers();
+        fetchUserRoles();
       }
     }
   
-    async function fetchUsers() {
+    async function fetchUserRoles() {
       try {
         const response = await getUserRoles(undefined, undefined, roleId)
-        setUsers(response);
+        setUserRoles(response);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching user roles:", error);
       } finally {
         setLoading(false);
       }
@@ -72,7 +71,7 @@ import {
                   ref={initialRef}
                   placeholder="Role ID"
                   type="number"
-                  onChange={handleUserIdChange}
+                  onChange={handleRoleIdChange}
                 />
               </FormControl>
             </ModalBody>
@@ -81,7 +80,7 @@ import {
                 colorScheme="brand"
                 mr={3}
                 color="#393c61"
-                onClick={handleGetUsers}
+                onClick={handleGetUserRoles}
               >
                 OK
               </Button>
@@ -89,7 +88,7 @@ import {
             </ModalFooter>
           </ModalContent>
         </Modal>
-        {users.length > 0 ? (
+        {userRoles.length > 0 ? (
           <Box marginTop="48px">
             <Heading>Valid user roles</Heading>
             {loading ? (
@@ -109,15 +108,15 @@ import {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {users.map((user) => (
-                      <Tr key={user.id}>
-                        <Td>{user.id}</Td>
-                        <Td>{user.version}</Td>
-                        <Td>{user.userId}</Td>
-                        <Td>{user.unitId}</Td>
-                        <Td>{user.roleId}</Td>
-                        <Td>{user.validFrom}</Td>
-                        <Td>{user.validTo}</Td>
+                    {userRoles.map((userRole) => (
+                      <Tr key={userRole.id}>
+                        <Td>{userRole.id}</Td>
+                        <Td>{userRole.version}</Td>
+                        <Td>{userRole.userId}</Td>
+                        <Td>{userRole.unitId}</Td>
+                        <Td>{userRole.roleId}</Td>
+                        <Td>{userRole.validFrom}</Td>
+                        <Td>{userRole.validTo}</Td>
                       </Tr>
                     ))}
                   </Tbody>

@@ -11,25 +11,24 @@ import {
   Tbody,
   Td,
 } from "@chakra-ui/react";
-import { getUserRoles, getUsers } from "../api/api";
-import { User } from "../types/user";
-import { useEffect, useState } from "react";
+import { getUserRoles } from "../api/api";
+import { useState } from "react";
 import { UserRole } from "../types/userrole";
 
 export function AllUserRoles() {
-  const [users, setUsers] = useState<UserRole[]>([]);
+  const [userRoles, setUserRoles] = useState<UserRole[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function handleGetAllUsers() {
-    fetchAllUsers();
+  function handleGetAllUserRoles() {
+    fetchAllUserRoles();
   }
 
-  async function fetchAllUsers() {
+  async function fetchAllUserRoles() {
     try {
       const response = await getUserRoles();
-      setUsers(response);
+      setUserRoles(response);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching user roles:", error);
     } finally {
       setLoading(false);
     }
@@ -37,10 +36,15 @@ export function AllUserRoles() {
 
   return (
     <Box>
-      <Button colorScheme="brand" size="lg" color="#393c61" onClick={handleGetAllUsers}>
+      <Button
+        colorScheme="brand"
+        size="lg"
+        color="#393c61"
+        onClick={handleGetAllUserRoles}
+      >
         Get all user roles
       </Button>
-      {users.length > 0 ? (
+      {userRoles.length > 0 ? (
         <Box marginTop="48px">
           <Heading>All user roles</Heading>
           {loading ? (
@@ -60,15 +64,15 @@ export function AllUserRoles() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {users.map((user) => (
-                    <Tr key={user.id}>
-                      <Td>{user.id}</Td>
-                      <Td>{user.version}</Td>
-                      <Td>{user.userId}</Td>
-                      <Td>{user.unitId}</Td>
-                      <Td>{user.roleId}</Td>
-                      <Td>{user.validFrom}</Td>
-                      <Td>{user.validTo}</Td>
+                  {userRoles.map((userRole) => (
+                    <Tr key={userRole.id}>
+                      <Td>{userRole.id}</Td>
+                      <Td>{userRole.version}</Td>
+                      <Td>{userRole.userId}</Td>
+                      <Td>{userRole.unitId}</Td>
+                      <Td>{userRole.roleId}</Td>
+                      <Td>{userRole.validFrom}</Td>
+                      <Td>{userRole.validTo}</Td>
                     </Tr>
                   ))}
                 </Tbody>

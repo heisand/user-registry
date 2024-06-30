@@ -34,7 +34,6 @@ export function UsersWithRolesByUnitId() {
   const [loading, setLoading] = useState(true);
 
   const handleUnitIdtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setUnitId(e.target.value);
   };
 

@@ -3,7 +3,6 @@ import { Form } from "../view/Form";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
 import { AllUserRoles } from "../view/AllUserRoles";
-import { UsersWithRolesByUnitId } from "../view/UsersWithRolesByUnitId";
 import { ValidUserRolesByUnitAndTimestamp } from "../view/ValidUserRolesByUnitAndTimestamp";
 import { UserRolesByUserId } from "../view/UserRolesByUserId";
 import { UserRolesByRoleId } from "../view/UserRolesByRoleId";

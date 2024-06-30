@@ -37,12 +37,10 @@ export function ValidUserRolesByUnitAndTimestamp() {
   const [loading, setLoading] = useState(true);
 
   const handleUnitIdtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setUnitId(e.target.value);
   };
 
   const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setUserId(e.target.value);
   };
 

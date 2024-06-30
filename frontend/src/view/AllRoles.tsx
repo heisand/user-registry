@@ -16,19 +16,19 @@ import { useState } from "react";
 import { Role } from "../types/role";
 
 export function AllRoles() {
-  const [users, setUsers] = useState<Role[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function handleGetAllUsers() {
-    fetchAllUsers();
+  function handleGetAllRoles() {
+    fetchAllRoles();
   }
 
-  async function fetchAllUsers() {
+  async function fetchAllRoles() {
     try {
       const response = await getRoles();
-      setUsers(response);
+      setRoles(response);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching roles:", error);
     } finally {
       setLoading(false);
     }
@@ -40,11 +40,11 @@ export function AllRoles() {
         colorScheme="brand"
         size="lg"
         color="#393c61"
-        onClick={handleGetAllUsers}
+        onClick={handleGetAllRoles}
       >
         Get all roles
       </Button>
-      {users.length > 0 ? (
+      {roles.length > 0 ? (
         <Box marginTop="48px">
           <Heading>All roles</Heading>
           {loading ? (
@@ -60,11 +60,11 @@ export function AllRoles() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {users.map((user) => (
-                    <Tr key={user.id}>
-                      <Td>{user.id}</Td>
-                      <Td>{user.version}</Td>
-                      <Td>{user.name}</Td>
+                  {roles.map((role) => (
+                    <Tr key={role.id}>
+                      <Td>{role.id}</Td>
+                      <Td>{role.version}</Td>
+                      <Td>{role.name}</Td>
                     </Tr>
                   ))}
                 </Tbody>

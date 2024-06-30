@@ -30,26 +30,25 @@ import {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const [unitId, setUnitId] = useState("");
-    const [users, setUsers] = useState<UserRole[]>([]);
+    const [userRoles, setUserRoles] = useState<UserRole[]>([]);
     const [loading, setLoading] = useState(true);
   
     const handleUnitIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
       setUnitId(e.target.value);
     };
   
     function handleGetUsers() {
       if (unitId !== "") {
-        fetchUsers();
+        fetchUserRoles();
       }
     }
   
-    async function fetchUsers() {
+    async function fetchUserRoles() {
       try {
         const response = await getUserRoles(undefined, unitId)
-        setUsers(response);
+        setUserRoles(response);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching user roles:", error);
       } finally {
         setLoading(false);
       }
@@ -89,7 +88,7 @@ import {
             </ModalFooter>
           </ModalContent>
         </Modal>
-        {users.length > 0 ? (
+        {userRoles.length > 0 ? (
           <Box marginTop="48px">
             <Heading>Valid user roles</Heading>
             {loading ? (
@@ -109,15 +108,15 @@ import {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {users.map((user) => (
-                      <Tr key={user.id}>
-                        <Td>{user.id}</Td>
-                        <Td>{user.version}</Td>
-                        <Td>{user.userId}</Td>
-                        <Td>{user.unitId}</Td>
-                        <Td>{user.roleId}</Td>
-                        <Td>{user.validFrom}</Td>
-                        <Td>{user.validTo}</Td>
+                    {userRoles.map((userRole) => (
+                      <Tr key={userRole.id}>
+                        <Td>{userRole.id}</Td>
+                        <Td>{userRole.version}</Td>
+                        <Td>{userRole.userId}</Td>
+                        <Td>{userRole.unitId}</Td>
+                        <Td>{userRole.roleId}</Td>
+                        <Td>{userRole.validFrom}</Td>
+                        <Td>{userRole.validTo}</Td>
                       </Tr>
                     ))}
                   </Tbody>

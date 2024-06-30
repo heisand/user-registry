@@ -42,7 +42,7 @@ export function Form(props: FormProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const [id, setId] = useState("");
-  const [input, setInput] = useState("");
+  const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
   const [unitId, setUnitId] = useState("");
   const [roleId, setRoleId] = useState("");
@@ -51,32 +51,26 @@ export function Form(props: FormProps) {
   const [validTo, setValidTo] = useState<Date | null>(null);
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setId(e.target.value);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInput(e.target.value);
+    setName(e.target.value);
   };
 
   const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setUserId(e.target.value);
   };
 
   const handleUnitIdtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setUnitId(e.target.value);
   };
 
   const handleRoleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setRoleId(e.target.value);
   };
 
   const handleVersionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
     setVersion(e.target.value);
   };
 
@@ -90,7 +84,7 @@ export function Form(props: FormProps) {
 
   function handleClose() {
     setId("");
-    setInput("");
+    setName("");
     setUserId("");
     setUnitId("");
     setRoleId("");
@@ -101,7 +95,7 @@ export function Form(props: FormProps) {
     onClose();
   }
 
-  const isMissingName = input === "";
+  const isMissingName = name === "";
   const isMissingId = id === "";
   const isMissingUserId = userId === "";
   const isMissingUnitId = unitId === "";
@@ -145,10 +139,10 @@ export function Form(props: FormProps) {
       case Entity.User:
         switch (props.operation) {
           case Operation.Create:
-            if(!isMissingName) createUser(input);
+            if(!isMissingName) createUser(name);
             break;
           case Operation.Update:
-            if(!isMissingId && !isMissingVersion && !isMissingName) updateUser(id, version, input);
+            if(!isMissingId && !isMissingVersion && !isMissingName) updateUser(id, version, name);
             break;
           case Operation.Delete:
             if(!isMissingId) deleteUser(id, version);
@@ -158,10 +152,10 @@ export function Form(props: FormProps) {
       case Entity.Unit:
         switch (props.operation) {
           case Operation.Create:
-            if(!isMissingName) createUnit(input);
+            if(!isMissingName) createUnit(name);
             break;
           case Operation.Update:
-            if(!isMissingId && !isMissingVersion && !isMissingName) updateUnit(id, version, input);
+            if(!isMissingId && !isMissingVersion && !isMissingName) updateUnit(id, version, name);
             break;
           case Operation.Delete:
             if(!isMissingId) deleteUnit(id, version);
@@ -171,10 +165,10 @@ export function Form(props: FormProps) {
       case Entity.Role:
         switch (props.operation) {
           case Operation.Create:
-            if(!isMissingName) createRole(input);
+            if(!isMissingName) createRole(name);
             break;
           case Operation.Update:
-            if(!isMissingId && !isMissingVersion && !isMissingName) updateRole(id, version, input);
+            if(!isMissingId && !isMissingVersion && !isMissingName) updateRole(id, version, name);
             break;
           case Operation.Delete:
             if(!isMissingId) deleteRole(id, version);

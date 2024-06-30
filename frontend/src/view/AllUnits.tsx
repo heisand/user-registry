@@ -16,19 +16,19 @@ import { useState } from "react";
 import { Unit } from "../types/unit";
 
 export function AllUnits() {
-  const [users, setUsers] = useState<Unit[]>([]);
+  const [units, setUnits] = useState<Unit[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function handleGetAllUsers() {
-    fetchAllUsers();
+  function handleGetAllUnits() {
+    fetchAllUnits();
   }
 
-  async function fetchAllUsers() {
+  async function fetchAllUnits() {
     try {
       const response = await getUnits();
-      setUsers(response);
+      setUnits(response);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching units:", error);
     } finally {
       setLoading(false);
     }
@@ -40,11 +40,11 @@ export function AllUnits() {
         colorScheme="brand"
         size="lg"
         color="#393c61"
-        onClick={handleGetAllUsers}
+        onClick={handleGetAllUnits}
       >
         Get all units
       </Button>
-      {users.length > 0 ? (
+      {units.length > 0 ? (
         <Box marginTop="48px">
           <Heading>All units</Heading>
           {loading ? (
@@ -60,11 +60,11 @@ export function AllUnits() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {users.map((user) => (
-                    <Tr key={user.id}>
-                      <Td>{user.id}</Td>
-                      <Td>{user.version}</Td>
-                      <Td>{user.name}</Td>
+                  {units.map((unit) => (
+                    <Tr key={unit.id}>
+                      <Td>{unit.id}</Td>
+                      <Td>{unit.version}</Td>
+                      <Td>{unit.name}</Td>
                     </Tr>
                   ))}
                 </Tbody>

@@ -61,14 +61,19 @@ async function postUserRole(
   }
 }
 
-async function updateEntity(url: string, id: number, version: number) {
+async function updateEntity(
+  url: string,
+  id: string,
+  version: string,
+  name: string
+) {
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id, version }),
+      body: JSON.stringify({ id, version, name }),
     });
 
     if (!response.ok) {
@@ -82,7 +87,7 @@ async function updateEntity(url: string, id: number, version: number) {
   }
 }
 
-async function deleteEntity(url: string, id: number, version: number) {
+async function deleteEntity(url: string, id: string, version: string) {
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
       method: "DELETE",
@@ -260,73 +265,39 @@ export async function getUser(id: number) {
 }
 
 export async function createUser(name: string) {
-  const response = await fetch(`${BASE_URL}/api/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ name }),
-  });
-  if (!response.ok) {
-    console.error("Error posting", response.status, await response.text());
-  }
+  postEntity(`/api/users`, name);
 }
 
-export async function updateUser(id: number, version: number) {
-  updateEntity(`/api/users/${id}`, id, version);
+export async function updateUser(id: string, version: string, name: string) {
+  updateEntity(`/api/users/${id}`, id, version, name);
 }
 
-export async function deleteUser(id: number, version: number) {
-  const response = await fetch(`${BASE_URL}/api/users/${id}`, {
-    method: "DELETE",
-    body: JSON.stringify({ id, version }),
-  });
-  if (!response.ok) {
-    console.error("Error deleting", response.status, await response.text());
-  }
+export async function deleteUser(id: string, version: string) {
+  deleteEntity(`/api/users/${id}`, id, version);
 }
 
 export async function createUnit(name: string) {
   postEntity("/api/units", name);
 }
 
-export async function updateUnit(id: number, version: number) {
-  const response = await fetch(`${BASE_URL}/api/units/${id}`, {
-    method: "PUT",
-    body: JSON.stringify({ id, version }),
-  });
-  if (!response.ok) {
-    console.error("Error putting", response.status, await response.text());
-  }
+export async function updateUnit(id: string, version: string, name: string) {
+  updateEntity(`/api/units/${id}`, id, version, name);
 }
 
-export async function deleteUnit(id: number, version: number) {
-  const response = await fetch(`${BASE_URL}/api/units/${id}`, {
-    method: "DELETE",
-    body: JSON.stringify({ id, version }),
-  });
-  if (!response.ok) {
-    console.error("Error deleting", response.status, await response.text());
-  }
+export async function deleteUnit(id: string, version: string) {
+  deleteEntity(`/api/units/${id}`, id, version);
 }
 
 export async function createRole(name: string) {
   postEntity("/api/roles", name);
 }
 
-export async function updateRole(id: number, version: number) {
-  updateEntity(`/api/roles/${id}`, id, version);
+export async function updateRole(id: string, version: string, name: string) {
+  updateEntity(`/api/roles/${id}`, id, version, name);
 }
 
-export async function deleteRole(id: number, version: number) {
-  const response = await fetch(`${BASE_URL}/api/roles/${id}`, {
-    method: "DELETE",
-    body: JSON.stringify({ id, version }),
-  });
-  if (!response.ok) {
-    console.error("Error deleting", response.status, await response.text());
-  }
+export async function deleteRole(id: string, version: string) {
+  deleteEntity(`/api/roles/${id}`, id, version);
 }
 
 export async function createUserRole(
@@ -339,16 +310,14 @@ export async function createUserRole(
   postUserRole(userId, unitId, roleId, validFrom, validTo);
 }
 
-export async function updateUserRole(id: number, version: number) {
-  updateEntity(`/api/user-roles/${id}`, id, version);
+export async function updateUserRole(
+  id: string,
+  version: string,
+  name: string
+) {
+  updateEntity(`/api/user-roles/${id}`, id, version, name);
 }
 
-export async function deleteUseRole(id: number, version: number) {
-  const response = await fetch(`${BASE_URL}/api/user-roles/${id}`, {
-    method: "DELETE",
-    body: JSON.stringify({ id, version }),
-  });
-  if (!response.ok) {
-    console.error("Error deleting", response.status, await response.text());
-  }
+export async function deleteUseRole(id: string, version: string) {
+  deleteEntity(`/api/user-roles/${id}`, id, version);
 }

@@ -16,7 +16,18 @@ import {
   Box,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { createRole, createUnit, createUser, createUserRole } from "../api/api";
+import {
+  createRole,
+  createUnit,
+  createUser,
+  createUserRole,
+  deleteRole,
+  deleteUnit,
+  deleteUser,
+  updateRole,
+  updateUnit,
+  updateUser,
+} from "../api/api";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
 import { Calendar } from "../component/Calendar";
@@ -29,12 +40,19 @@ type FormProps = {
 export function Form(props: FormProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
+  const [id, setId] = useState("");
   const [input, setInput] = useState("");
   const [userId, setUserId] = useState("");
   const [unitId, setUnitId] = useState("");
   const [roleId, setRoleId] = useState("");
+  const [version, setVersion] = useState("");
   const [validFrom, setValidFrom] = useState<Date | null>(null);
   const [validTo, setValidTo] = useState<Date | null>(null);
+
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setId(e.target.value);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -56,6 +74,11 @@ export function Form(props: FormProps) {
     setRoleId(e.target.value);
   };
 
+  const handleVersionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setVersion(e.target.value);
+  };
+
   function handleValidFrom(date: Date | null) {
     setValidFrom(date);
   }
@@ -64,7 +87,14 @@ export function Form(props: FormProps) {
     setValidTo(date);
   }
 
-  const isError = input === "";
+  const isMissingName = input === "";
+  const isMissingId = id === "";
+  const isMissingUserId = userId === "";
+  const isMissingUnitId = unitId === "";
+  const isMissingRoleId = roleId === "";
+  const isMissingVersion = version === "";
+  const isMissingValidFrom = validFrom === null;
+  const isMissingValidTo = validTo === null
 
   const getEntity = (entity: Entity): string => {
     switch (entity) {
@@ -101,45 +131,46 @@ export function Form(props: FormProps) {
       case Entity.User:
         switch (props.operation) {
           case Operation.Create:
-            createUser(input);
+            if(!isMissingName) createUser(input);
             break;
           case Operation.Update:
-            //updateUser();
+            if(!isMissingId && !isMissingVersion && !isMissingName) updateUser(id, version, input);
             break;
           case Operation.Delete:
-            //deleteUser();
+            if(!isMissingId && !isMissingVersion) deleteUser(id, version);
             break;
         }
         break;
       case Entity.Unit:
         switch (props.operation) {
           case Operation.Create:
-            createUnit(input);
+            if(!isMissingName) createUnit(input);
             break;
           case Operation.Update:
-            //updateUnit();
+            if(!isMissingId && !isMissingVersion && !isMissingName) updateUnit(id, version, input);
             break;
           case Operation.Delete:
-            //deleteUnit();
+            if(!isMissingId && !isMissingVersion) deleteUnit(id, version);
             break;
         }
         break;
       case Entity.Role:
         switch (props.operation) {
           case Operation.Create:
-            createRole(input);
+            if(!isMissingName) createRole(input);
             break;
           case Operation.Update:
-            //updateRole();
+            if(!isMissingId && !isMissingVersion && !isMissingName) updateRole(id, version, input);
             break;
           case Operation.Delete:
-            //deleteRole();
+            if(!isMissingId && !isMissingVersion) deleteRole(id, version);
             break;
         }
         break;
       case Entity.UserRole:
         switch (props.operation) {
           case Operation.Create:
+            if (!isMissingUserId && !isMissingUnitId && !isMissingRoleId)
             createUserRole(
               Number.parseInt(userId),
               Number.parseInt(unitId),
@@ -172,7 +203,8 @@ export function Form(props: FormProps) {
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            {props.entity !== Entity.UserRole ? (
+            {props.entity !== Entity.UserRole &&
+            props.operation !== Operation.Delete ? (
               <FormControl isRequired>
                 <FormLabel>Name</FormLabel>
                 <Input
@@ -180,11 +212,41 @@ export function Form(props: FormProps) {
                   placeholder="Name"
                   onChange={handleInputChange}
                 />
-                {!isError ? (
+                {!isMissingName ? (
                   <FormHelperText>Enter the name on the entity.</FormHelperText>
                 ) : (
                   <FormErrorMessage>Name is required.</FormErrorMessage>
                 )}
+              </FormControl>
+            ) : null}
+            {props.operation === Operation.Update ? (
+              <Box>
+                <FormControl isRequired marginTop="24px">
+                  <FormLabel>Id</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    placeholder="ID"
+                    onChange={handleIdChange}
+                  />
+                </FormControl>
+                <FormControl isRequired marginTop="24px">
+                  <FormLabel>Version</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    placeholder="Version"
+                    onChange={handleVersionChange}
+                  />
+                </FormControl>
+              </Box>
+            ) : null}
+            {props.operation === Operation.Delete ? (
+              <FormControl isRequired>
+                <FormLabel>Id</FormLabel>
+                <Input
+                  ref={initialRef}
+                  placeholder="ID"
+                  onChange={handleIdChange}
+                />
               </FormControl>
             ) : null}
             {props.entity === Entity.UserRole ? (
@@ -197,7 +259,7 @@ export function Form(props: FormProps) {
                     type="number"
                     onChange={handleUserIdChange}
                   />
-                  {!isError ? (
+                  {!isMissingName ? (
                     <FormHelperText>
                       Enter the name on the entity.
                     </FormHelperText>
@@ -213,7 +275,7 @@ export function Form(props: FormProps) {
                     type="number"
                     onChange={handleUnitIdtChange}
                   />
-                  {!isError ? (
+                  {!isMissingName ? (
                     <FormHelperText>
                       Enter the name on the entity.
                     </FormHelperText>
@@ -229,7 +291,7 @@ export function Form(props: FormProps) {
                     type="number"
                     onChange={handleRoleIdChange}
                   />
-                  {!isError ? (
+                  {!isMissingName ? (
                     <FormHelperText>
                       Enter the name on the entity.
                     </FormHelperText>

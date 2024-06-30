@@ -13,8 +13,6 @@ This is an entirely _thought_ project for a registry system, here a cancer regis
 
 It per now enables the admin part, i.e., managing users, units and their roles.
 
-In the (thought) future it could become a system for people working in cancer research, or other things for that matter.
-
 ## Features (WIP)
  - Feature 1
  - Feature 2
@@ -37,6 +35,15 @@ git clone https://github.com/heisand/cancer-registry
 ```
 
 ### Backend
+ - JDK
+
+   You need to have Java Development Kit (JDK) 17 or later installed.
+
+   Install via [Homebrew](https://brew.sh/) or other package managers, e.g., `brew install openjdk@17`.
+
+ - Gradle
+
+   Install via [Homebrew](https://brew.sh/) or other package managers, e.g., `brew install gradle`.
 
 ### Frontend
 

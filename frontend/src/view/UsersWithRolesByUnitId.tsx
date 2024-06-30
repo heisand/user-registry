@@ -63,7 +63,7 @@ export function UsersWithRolesByUnitId() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{"Which unit ID?"}</ModalHeader>
+          <ModalHeader>Which unit ID?</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl isRequired>

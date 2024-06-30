@@ -79,7 +79,7 @@ export function ValidUserRolesByUnitAndTimestamp() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{"Which unit ID?"}</ModalHeader>
+          <ModalHeader>{"Which unit and user ID?"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl isRequired>

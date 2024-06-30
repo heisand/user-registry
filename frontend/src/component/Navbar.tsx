@@ -21,7 +21,7 @@ export function Navbar() {
           <Link to="/roles">Roles</Link>
         </li>
         <li>
-          <Link to="/user-roles">User Roles</Link>
+          <Link to="/user-roles">User roles</Link>
         </li>
       </ul>
     </nav>

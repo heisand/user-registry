@@ -100,13 +100,34 @@ async function deleteEntity(url: string, id: number, version: number) {
   }
 }
 
-export async function getUsers() {
-  const response = await fetch(`${BASE_URL}/api/users`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  });
+export async function getUsers(
+  name: string | undefined = undefined,
+  unitId: string | undefined = undefined,
+  roleId: string | undefined = undefined
+) {
+  const params = new URLSearchParams();
+
+  if (name !== undefined) {
+    params.append("name", name);
+  }
+  if (unitId !== undefined) {
+    params.append("unitId", unitId);
+  }
+  if (roleId !== undefined) {
+    params.append("roleId", roleId);
+  }
+
+  const queryString = params.toString();
+
+  const response = await fetch(
+    `${BASE_URL}/api/users${queryString ? `?${queryString}` : ""}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
   if (!response.ok) {
     console.error("Error fetching", response.status, await response.text());
     return [];

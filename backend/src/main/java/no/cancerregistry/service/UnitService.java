@@ -1,6 +1,6 @@
 package no.cancerregistry.service;
 
-import no.cancerregistry.exception.UserNotFoundException;
+import no.cancerregistry.exception.UnitNotFoundException;
 import no.cancerregistry.exception.WrongIdException;
 import no.cancerregistry.exception.WrongVersionException;
 import no.cancerregistry.model.*;
@@ -8,7 +8,6 @@ import no.cancerregistry.repository.UnitRepository;
 import no.cancerregistry.repository.entity.Unit;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,7 +46,7 @@ public class UnitService {
 
     public UnitDTO getUnit(Long id) {
         Unit unit = unitRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(
+                .orElseThrow(() -> new UnitNotFoundException(
                         "Unit with id " + id + " does not exist."));
 
         return new UnitDTO(
@@ -82,7 +81,7 @@ public class UnitService {
         }
 
         Unit existingUnit = unitRepository.findById(unwrappedId)
-                .orElseThrow(() -> new UserNotFoundException(
+                .orElseThrow(() -> new UnitNotFoundException(
                         "Unit with id " + unwrappedId + " does not exist."));
 
         if (!Objects.equals(existingUnit.getVersion(), unwrappedVersion)) {

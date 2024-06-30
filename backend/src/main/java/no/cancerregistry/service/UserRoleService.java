@@ -178,6 +178,10 @@ public class UserRoleService {
                 userRole.getValidTo());
     }
 
+    public void deleteUserRole(Long id) {
+        userRoleRepository.deleteById(id);
+    }
+
     public boolean hasOverlappingRole(UserRole userRole) {
         return userRoleRepository.hasOverlappingUserRole(
                 userRole.getUser().getId(),

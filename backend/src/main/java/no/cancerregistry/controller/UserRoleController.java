@@ -71,7 +71,9 @@ public class UserRoleController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserRoleDTO> deleteUser(@PathVariable("id") Long id) {
-        return null;
+        userRoleService.deleteUserRole(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/units/{unitId}/users-with-roles")

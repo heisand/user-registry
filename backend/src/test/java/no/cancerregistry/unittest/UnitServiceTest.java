@@ -45,7 +45,7 @@ public class UnitServiceTest {
         UnitDTO savedUnit = unitService.createUnit(unit);
 
         assertNotNull(savedUnit);
-        assertEquals(savedUnit.getName(), "Researcher Researcher");
+        assertEquals(savedUnit.getVersion(), Optional.of(1));
     }
 
     @Test

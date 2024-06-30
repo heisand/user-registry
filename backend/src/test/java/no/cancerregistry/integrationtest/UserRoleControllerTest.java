@@ -91,13 +91,13 @@ public class UserRoleControllerTest {
     @Test
     public void testGetUsersWithRoles_returns200() throws Exception {
         UserDTO user = new UserDTO(
-                null, null, "Forskern");
+                null, null, "Researchern");
 
         UnitDTO unit = new UnitDTO(
                 null, null, "FHI");
 
         RoleDTO role = new RoleDTO(
-                Optional.of(1L), Optional.of(1), "Forsker");
+                Optional.of(1L), Optional.of(1), "Researcher");
         List<RoleDTO> roles = new ArrayList<>();
         roles.add(role);
 

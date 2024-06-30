@@ -1,8 +1,6 @@
 package no.cancerregistry.service;
 
-import no.cancerregistry.exception.FilterNotSupportedException;
-import no.cancerregistry.exception.OverlappingRoleException;
-import no.cancerregistry.exception.UserNotFoundException;
+import no.cancerregistry.exception.*;
 import no.cancerregistry.model.RoleDTO;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -74,10 +73,31 @@ public class UserRoleService {
         );
     }
 
-    public UserRole updateUserRole(UserRoleDTO userRoleDTO) {
-       UserRole existingRole = userRoleRepository.findById(userRoleDTO.getUserId())
-                .orElseThrow(() -> new UserNotFoundException(
+    public UserRole updateUserRole(Long id, UserRoleDTO userRoleDTO) {
+        Long unwrappedId = userRoleDTO.getId().orElse(id);
+        Integer unwrappedVersion = userRoleDTO.getVersion().orElse(null);
+
+        if (unwrappedVersion == null) {
+            throw new WrongVersionException("Version is missing");
+        }
+
+        if (!Objects.equals(unwrappedId, id)) {
+            throw new WrongIdException("The specified id does mot match the requested body");
+        }
+
+        UserRole existingRole = userRoleRepository.findById(userRoleDTO.getUserId())
+                .orElseThrow(() -> new UserRoleNotFoundException(
                         "User role with id " + userRoleDTO.getUserId() + " does not exist."));
+
+        if (!Objects.equals(existingRole.getVersion(), unwrappedVersion)) {
+            throw new WrongVersionException(
+                    "There is a version mismatch between the existing user role" +
+                            unwrappedId + "and the requested one. " +
+                            "Expected: " + existingRole.getVersion() +
+                            "Found: " + userRoleDTO.getVersion());
+        }
+
+
 
         // Only the valid from and valid to timestamps can be changed
         existingRole.setValidFrom(userRoleDTO.getValidFrom());
@@ -141,6 +161,8 @@ public class UserRoleService {
             throw new FilterNotSupportedException("The provided filter is not supported");
         }
 
+        List<UserRole> userRoles2 = (List<UserRole>) userRoleRepository.findAll();
+
         return userRoles.stream().map(
                 userRole -> new UserRoleDTO(
                         Optional.ofNullable(userRole.getId()),
@@ -155,7 +177,7 @@ public class UserRoleService {
 
     public UserRoleDTO getUserRole(Long id) {
         UserRole userRole = userRoleRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(
+                .orElseThrow(() -> new UserRoleNotFoundException(
                         "User role with id " + id + " does not exist."));
 
         return new UserRoleDTO(

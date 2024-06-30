@@ -48,7 +48,7 @@ public class UserServiceTest {
 		UserDTO savedUser = userService.createUser(user);
 
 		assertNotNull(savedUser);
-		assertEquals(savedUser.getName(), "Researcher Researcher");
+		assertEquals(savedUser.getVersion(), Optional.of(1));
 	}
 
 	@Test

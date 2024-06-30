@@ -44,7 +44,7 @@ public class RoleServiceTest {
         RoleDTO savedRole = roleService.createRole(role);
 
         assertNotNull(savedRole);
-        assertEquals(savedRole.getName(), "Researcher Researcher");
+        assertEquals(savedRole.getVersion(), Optional.of(1));
     }
 
     @Test

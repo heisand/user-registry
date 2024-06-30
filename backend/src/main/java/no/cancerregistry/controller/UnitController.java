@@ -40,7 +40,6 @@ public class UnitController {
 
     @PostMapping
     public ResponseEntity<Long> createUnit(@RequestBody UnitDTO unit) {
-
         UnitDTO savedUnit = unitService.createUnit(unit);
 
         Long savedId = savedUnit.getId().orElse(null);

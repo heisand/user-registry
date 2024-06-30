@@ -2,6 +2,7 @@ package no.cancerregistry.service;
 
 import no.cancerregistry.exception.FilterNotSupportedException;
 import no.cancerregistry.exception.OverlappingRoleException;
+import no.cancerregistry.exception.UserNotFoundException;
 import no.cancerregistry.model.RoleDTO;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
@@ -150,17 +151,32 @@ public class UserRoleService {
             throw new FilterNotSupportedException("The provided filter is not supported");
         }
 
-            return userRoles.stream().map(
-                    user -> new UserRoleDTO(
-                            Optional.ofNullable(user.getId()),
-                            Optional.ofNullable(user.getVersion()),
-                            user.getUser().getId(),
-                            user.getUnit().getId(),
-                            user.getRole().getId(),
-                            user.getValidFrom(),
-                            user.getValidTo())
-            ).collect(Collectors.toList());
-        }
+        return userRoles.stream().map(
+                userRole -> new UserRoleDTO(
+                        Optional.ofNullable(userRole.getId()),
+                        Optional.ofNullable(userRole.getVersion()),
+                        userRole.getUser().getId(),
+                        userRole.getUnit().getId(),
+                        userRole.getRole().getId(),
+                        userRole.getValidFrom(),
+                        userRole.getValidTo())
+        ).collect(Collectors.toList());
+    }
+
+    public UserRoleDTO getUserRole(Long id) {
+        UserRole userRole = userRoleRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User role with id " + id + " does not exist."));
+
+        return new UserRoleDTO(
+                Optional.ofNullable(userRole.getId()),
+                Optional.ofNullable(userRole.getVersion()),
+                userRole.getUser().getId(),
+                userRole.getUnit().getId(),
+                userRole.getRole().getId(),
+                userRole.getValidFrom(),
+                userRole.getValidTo());
+    }
 
     public boolean hasOverlappingRole(UserRole userRole) {
         return userRoleRepository.hasOverlappingUserRole(

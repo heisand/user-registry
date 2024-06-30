@@ -42,7 +42,6 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<Long> createUser(@Valid @RequestBody UserDTO user) {
-
 		UserDTO savedUser = userService.createUser(user);
 
 		Long savedId = savedUser.getId().orElse(null);

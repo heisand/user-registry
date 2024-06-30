@@ -49,10 +49,11 @@ public class UserRoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserRoleDTO> getUser(@PathVariable("id") Long id) {
-        return null;
-    }
+    public ResponseEntity<UserRoleDTO> getUserRole(@PathVariable("id") Long id) {
+        UserRoleDTO userRole = userRoleService.getUserRole(id);
 
+        return ResponseEntity.status(HttpStatus.OK).body(userRole);
+    }
 
     @PostMapping
     public ResponseEntity<UserRoleDTO> createUserRole(@Valid @RequestBody UserRoleDTO userRole) {

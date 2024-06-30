@@ -37,7 +37,6 @@ public class RoleController {
 
     @PostMapping
     public ResponseEntity<Long> createRole(@RequestBody RoleDTO role) {
-
         RoleDTO savedRole = roleService.createRole(role);
 
         Long savedId = savedRole.getId().orElse(null);

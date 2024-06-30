@@ -1,6 +1,6 @@
 package no.cancerregistry.service;
 
-import no.cancerregistry.exception.UserNotFoundException;
+import no.cancerregistry.exception.RoleNotFoundException;
 import no.cancerregistry.exception.WrongIdException;
 import no.cancerregistry.exception.WrongVersionException;
 import no.cancerregistry.model.*;
@@ -42,7 +42,7 @@ public class RoleService {
 
     public RoleDTO getRole(Long id) {
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(
+                .orElseThrow(() -> new RoleNotFoundException(
                         "Role with id " + id + " does not exist."));
 
         return new RoleDTO(
@@ -77,7 +77,7 @@ public class RoleService {
         }
 
         Role existingRole = roleRepository.findById(unwrappedId)
-                .orElseThrow(() -> new UserNotFoundException(
+                .orElseThrow(() -> new RoleNotFoundException(
                         "Role with id " + unwrappedId + " does not exist."));
 
         if (!Objects.equals(existingRole.getVersion(), unwrappedVersion)) {

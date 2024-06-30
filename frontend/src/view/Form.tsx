@@ -87,6 +87,19 @@ export function Form(props: FormProps) {
     setValidTo(date);
   }
 
+  function handleClose() {
+    setId("");
+    setInput("");
+    setUserId("");
+    setUnitId("");
+    setRoleId("");
+    setVersion("");
+    setValidFrom(null);
+    setValidTo(null);
+
+    onClose();
+  }
+
   const isMissingName = input === "";
   const isMissingId = id === "";
   const isMissingUserId = userId === "";
@@ -137,7 +150,7 @@ export function Form(props: FormProps) {
             if(!isMissingId && !isMissingVersion && !isMissingName) updateUser(id, version, input);
             break;
           case Operation.Delete:
-            if(!isMissingId && !isMissingVersion) deleteUser(id, version);
+            if(!isMissingId) deleteUser(id, version);
             break;
         }
         break;
@@ -311,7 +324,7 @@ export function Form(props: FormProps) {
             <Button colorScheme="brand" mr={3} color="#393c61" onClick={onSave}>
               Save
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={handleClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

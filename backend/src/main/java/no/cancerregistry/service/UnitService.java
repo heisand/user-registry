@@ -23,8 +23,18 @@ public class UnitService {
         this.unitRepository = unitRepository;
     }
 
-    public List<UnitDTO> getUnits() {
-        List<Unit> units = (List<Unit>) unitRepository.findAll();
+    public List<UnitDTO> getUnits(Optional<String> name, Optional<Long> unitId) {
+        List<Unit> units;
+
+        if (unitId.isPresent() && name.isPresent()) {
+            units = unitRepository.findUnitsByUnitIdAndName(unitId.orElseThrow(), name.orElseThrow());
+        } else if (unitId.isPresent()) {
+            units = unitRepository.findUnitsByUnitId(unitId.orElseThrow());
+        } else if (name.isPresent()) {
+            units = unitRepository.findUnitsByName(name.orElseThrow());
+        } else {
+            units = (List<Unit>) unitRepository.findAll();
+        }
 
         return units.stream().map(
                 unit -> new UnitDTO(

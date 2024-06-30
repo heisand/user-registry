@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/units")
@@ -20,8 +21,11 @@ public class UnitController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UnitDTO>> getUnits() {
-        List<UnitDTO> units = unitService.getUnits();
+    public ResponseEntity<List<UnitDTO>> getUnits(
+            @RequestParam Optional<String> name,
+            @RequestParam Optional<Long> unitId
+    ) {
+        List<UnitDTO> units = unitService.getUnits(name, unitId);
 
         return ResponseEntity.status(HttpStatus.OK).body(units);
     }

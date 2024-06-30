@@ -5,7 +5,9 @@ import no.cancerregistry.exception.WrongIdException;
 import no.cancerregistry.exception.WrongVersionException;
 import no.cancerregistry.model.*;
 import no.cancerregistry.repository.UserRepository;
+import no.cancerregistry.repository.UserRoleRepository;
 import no.cancerregistry.repository.entity.User;
+import no.cancerregistry.repository.entity.UserRole;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +19,12 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+
         this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     public List<UserDTO> getUsers(Optional<String> name, Optional<Long> unitId, Optional<Long> roleId) {
@@ -112,7 +117,12 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        // TODO: Only delete when there are no user roles for that user
-        userRepository.deleteById(id);
+        List<UserRole> userRoles = userRoleRepository.findUserRolesByUserId(id);
+
+        if (userRoles.isEmpty()) {
+            userRepository.deleteById(id);
+        } else {
+            throw new IllegalStateException("User " + id + " cannot be deleted because it has a user role.");
+        }
     }
 }

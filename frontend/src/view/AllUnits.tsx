@@ -19,10 +19,6 @@ export function AllUnits() {
   const [units, setUnits] = useState<Unit[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function handleGetAllUnits() {
-    fetchAllUnits();
-  }
-
   async function fetchAllUnits() {
     try {
       const response = await getUnits();
@@ -40,7 +36,7 @@ export function AllUnits() {
         colorScheme="brand"
         size="lg"
         color="#393c61"
-        onClick={handleGetAllUnits}
+        onClick={fetchAllUnits}
       >
         Get all units
       </Button>

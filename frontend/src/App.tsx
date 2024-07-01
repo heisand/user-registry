@@ -3,11 +3,11 @@ import { Box } from "@chakra-ui/react";
 import { Navbar } from "./component/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Footer } from "./component/Footer";
-import { Roles } from "./component/Roles";
-import { Units } from "./component/Units";
-import { UserRoles } from "./component/UserRoles";
-import { Users } from "./component/Users";
-import { Home } from "./component/Home";
+import { Roles } from "./view/Roles";
+import { Units } from "./view/Units";
+import { UserRoles } from "./view/UserRoles";
+import { Users } from "./view/Users";
+import { Home } from "./view/Home";
 
 function App() {
   return (

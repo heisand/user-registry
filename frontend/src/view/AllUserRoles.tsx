@@ -18,11 +18,7 @@ import { UserRole } from "../types/userrole";
 export function AllUserRoles() {
   const [userRoles, setUserRoles] = useState<UserRole[]>([]);
   const [loading, setLoading] = useState(true);
-
-  function handleGetAllUserRoles() {
-    fetchAllUserRoles();
-  }
-
+  
   async function fetchAllUserRoles() {
     try {
       const response = await getUserRoles();
@@ -40,7 +36,7 @@ export function AllUserRoles() {
         colorScheme="brand"
         size="lg"
         color="#393c61"
-        onClick={handleGetAllUserRoles}
+        onClick={fetchAllUserRoles}
       >
         Get all user roles
       </Button>

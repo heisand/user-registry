@@ -19,10 +19,6 @@ export function AllRoles() {
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function handleGetAllRoles() {
-    fetchAllRoles();
-  }
-
   async function fetchAllRoles() {
     try {
       const response = await getRoles();
@@ -40,7 +36,7 @@ export function AllRoles() {
         colorScheme="brand"
         size="lg"
         color="#393c61"
-        onClick={handleGetAllRoles}
+        onClick={fetchAllRoles}
       >
         Get all roles
       </Button>

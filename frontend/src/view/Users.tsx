@@ -22,14 +22,14 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
-import { AllUsers } from "../view/AllUsers";
-import { Form } from "../view/Form";
+import { AllUsers } from "./AllUsers";
+import { Form } from "./Form";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
 import React, { useState, useRef } from "react";
 import { getUsers } from "../api/api";
 import { User } from "../types/user";
-import { UsersWithRolesByUnitId } from "../view/UsersWithRolesByUnitId";
+import { UsersWithRolesByUnitId } from "./UsersWithRolesByUnitId";
 
 export function Users() {
   return (

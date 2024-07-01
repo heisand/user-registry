@@ -1,14 +1,14 @@
 import { Box, Heading } from "@chakra-ui/react";
-import { Form } from "../view/Form";
+import { Form } from "./Form";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
-import { AllUnits } from "../view/AllUnits";
+import { AllRoles } from "./AllRoles";
 
-export function Units() {
+export function Roles() {
   return (
     <>
       <Heading as="h1" textAlign="center" color="#393c61">
-        Units
+        Roles
       </Heading>
       <Box
         display="flex"
@@ -19,11 +19,11 @@ export function Units() {
         marginTop="48px"
         marginBottom="48px"
       >
-        <Form entity={Entity.Unit} operation={Operation.Create} />
-        <Form entity={Entity.Unit} operation={Operation.Update} />
-        <Form entity={Entity.Unit} operation={Operation.Delete} />
+        <Form entity={Entity.Role} operation={Operation.Create} />
+        <Form entity={Entity.Role} operation={Operation.Update} />
+        <Form entity={Entity.Role} operation={Operation.Delete} />
       </Box>
-      <AllUnits />
+      <AllRoles />
     </>
   );
 }

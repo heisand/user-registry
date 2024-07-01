@@ -18,11 +18,7 @@ import { useState } from "react";
 export function AllUsers() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-
-  function handleGetAllUsers() {
-    fetchAllUsers();
-  }
-
+  
   async function fetchAllUsers() {
     try {
       const response = await getUsers();
@@ -40,7 +36,7 @@ export function AllUsers() {
         colorScheme="brand"
         size="lg"
         color="#393c61"
-        onClick={handleGetAllUsers}
+        onClick={fetchAllUsers}
       >
         Get all users
       </Button>

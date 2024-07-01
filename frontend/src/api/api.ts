@@ -31,9 +31,18 @@ async function postUserRole(
   userId: number,
   unitId: number,
   roleId: number,
-  validFrom: string,
-  validTo: string
+  validFrom: string | undefined,
+  validTo: string | undefined
 ) {
+  const body = JSON.stringify(
+    validFrom && validTo
+      ? { userId, unitId, roleId, validFrom, validTo }
+      : validFrom
+      ? { userId, unitId, roleId, validFrom }
+      : validTo
+      ? { userId, unitId, roleId, validTo }
+      : { userId, unitId, roleId }
+  );
   try {
     const response = await fetch(`${BASE_URL}/api/user-roles`, {
       method: "POST",
@@ -41,13 +50,7 @@ async function postUserRole(
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({
-        userId,
-        unitId,
-        roleId,
-        validFrom,
-        validTo,
-      }),
+      body: body,
     });
 
     if (!response.ok) {
@@ -304,8 +307,8 @@ export async function createUserRole(
   userId: number,
   unitId: number,
   roleId: number,
-  validFrom: string,
-  validTo: string
+  validFrom: string | undefined,
+  validTo: string | undefined
 ) {
   postUserRole(userId, unitId, roleId, validFrom, validTo);
 }
@@ -313,9 +316,37 @@ export async function createUserRole(
 export async function updateUserRole(
   id: string,
   version: string,
-  name: string
+  validFrom: string | undefined,
+  validTo: string | undefined
 ) {
-  updateEntity(`/api/user-roles/${id}`, id, version, name);
+  const body = JSON.stringify(
+    validFrom && validTo
+      ? { id, version, validFrom, validTo }
+      : validFrom
+      ? { id, version, validFrom }
+      : validTo
+      ? { id, version, validTo }
+      : { id, version }
+  );
+
+  try {
+    const response = await fetch(`${BASE_URL}/api/user-roles/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: body,
+    });
+
+    if (!response.ok) {
+      console.error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error posting:", error);
+  }
 }
 
 export async function deleteUserRole(id: string, version: string) {

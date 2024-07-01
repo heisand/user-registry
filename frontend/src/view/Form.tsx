@@ -28,6 +28,7 @@ import {
   updateRole,
   updateUnit,
   updateUser,
+  updateUserRole,
 } from "../api/api";
 import { Entity } from "../types/entity";
 import { Operation } from "../types/operation";
@@ -102,7 +103,7 @@ export function Form(props: FormProps) {
   const isMissingRoleId = roleId === "";
   const isMissingVersion = version === "";
   const isMissingValidFrom = validFrom === null;
-  const isMissingValidTo = validTo === null
+  const isMissingValidTo = validTo === null;
 
   const getEntity = (entity: Entity): string => {
     switch (entity) {
@@ -139,39 +140,42 @@ export function Form(props: FormProps) {
       case Entity.User:
         switch (props.operation) {
           case Operation.Create:
-            if(!isMissingName) createUser(name);
+            if (!isMissingName) createUser(name);
             break;
           case Operation.Update:
-            if(!isMissingId && !isMissingVersion && !isMissingName) updateUser(id, version, name);
+            if (!isMissingId && !isMissingVersion && !isMissingName)
+              updateUser(id, version, name);
             break;
           case Operation.Delete:
-            if(!isMissingId) deleteUser(id, version);
+            if (!isMissingId) deleteUser(id, version);
             break;
         }
         break;
       case Entity.Unit:
         switch (props.operation) {
           case Operation.Create:
-            if(!isMissingName) createUnit(name);
+            if (!isMissingName) createUnit(name);
             break;
           case Operation.Update:
-            if(!isMissingId && !isMissingVersion && !isMissingName) updateUnit(id, version, name);
+            if (!isMissingId && !isMissingVersion && !isMissingName)
+              updateUnit(id, version, name);
             break;
           case Operation.Delete:
-            if(!isMissingId) deleteUnit(id, version);
+            if (!isMissingId) deleteUnit(id, version);
             break;
         }
         break;
       case Entity.Role:
         switch (props.operation) {
           case Operation.Create:
-            if(!isMissingName) createRole(name);
+            if (!isMissingName) createRole(name);
             break;
           case Operation.Update:
-            if(!isMissingId && !isMissingVersion && !isMissingName) updateRole(id, version, name);
+            if (!isMissingId && !isMissingVersion && !isMissingName)
+              updateRole(id, version, name);
             break;
           case Operation.Delete:
-            if(!isMissingId) deleteRole(id, version);
+            if (!isMissingId) deleteRole(id, version);
             break;
         }
         break;
@@ -179,16 +183,22 @@ export function Form(props: FormProps) {
         switch (props.operation) {
           case Operation.Create:
             if (!isMissingUserId && !isMissingUnitId && !isMissingRoleId)
-            createUserRole(
-              Number.parseInt(userId),
-              Number.parseInt(unitId),
-              Number.parseInt(roleId),
-              validFrom?.toISOString() ?? "",
-              validTo?.toISOString() ?? ""
-            );
+              createUserRole(
+                Number.parseInt(userId),
+                Number.parseInt(unitId),
+                Number.parseInt(roleId),
+                validFrom?.toISOString() ?? undefined,
+                validTo?.toISOString() ?? undefined
+              );
             break;
           case Operation.Update:
-            //updateUserRole();
+            if (!isMissingId && !isMissingVersion)
+              updateUserRole(
+                id,
+                version,
+                validFrom?.toISOString() ?? undefined,
+                validTo?.toISOString() ?? undefined
+              );
             break;
           case Operation.Delete:
             deleteUserRole(id, version);
@@ -257,7 +267,9 @@ export function Form(props: FormProps) {
                 />
               </FormControl>
             ) : null}
-            {props.entity === Entity.UserRole && props.operation !== Operation.Delete ? (
+            {props.entity === Entity.UserRole &&
+            props.operation !== Operation.Delete &&
+            props.operation !== Operation.Update ? (
               <Box marginTop="24px">
                 <FormControl isRequired>
                   <FormLabel>User ID</FormLabel>
@@ -307,11 +319,16 @@ export function Form(props: FormProps) {
                     <FormErrorMessage>Name is required.</FormErrorMessage>
                   )}
                 </FormControl>
+              </Box>
+            ) : null}
+            {props.entity === Entity.UserRole &&
+            props.operation !== Operation.Delete ? (
+              <>
                 <FormLabel marginTop="24px">Valid from</FormLabel>
                 <Calendar handleDate={handleValidFrom} />
                 <FormLabel marginTop="24px">Valid to</FormLabel>
                 <Calendar handleDate={handleValidTo} />
-              </Box>
+              </>
             ) : null}
           </ModalBody>
 

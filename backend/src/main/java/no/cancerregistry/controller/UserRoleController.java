@@ -15,8 +15,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user-roles")
-// TODO: Add and use a global CORS handling
-@CrossOrigin(origins = "http://localhost:5173")
 public class UserRoleController {
 
     private final UserRoleService userRoleService;

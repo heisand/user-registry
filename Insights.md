@@ -20,6 +20,8 @@ It leverages [Chakra UI](https://v2.chakra-ui.com/) as component library, due to
 
 ## Future improvements
 
+### Frontend
+
 Due to time limitations, the frontend does not yet support much feedback on actions performed, which makes it hard for a user to follow along. 
 
 A better solution will be to not only swallow any errors, but also act upon them and show feecback to users in the form of error messages and 
@@ -28,3 +30,11 @@ indications of successful actions.
 Some components would also benefit from being made more general so that they can be reused.
 
 The frontend should also be made responsive, so that it adjusts to different screen sizes.
+
+### Backend
+
+CORS can be handled globally instead of per controller.
+
+For better security, the endpoints can be secured.
+
+And finally, a working Dockerization can be set up.

@@ -1,22 +1,22 @@
 # cancer-registry
 
 ## Table of Contents
-- [Description](#description)
-- [Features](#features-wip)
-- [Data model](#data-model)
-- [Installation](#installation)
-- [Usage](#usage)
+- [cancer-registry](#cancer-registry)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Data model](#data-model)
+  - [Installation](#installation)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Usage](#usage)
+    - [Backend](#backend-1)
+    - [Frontend](#frontend-1)
 
 ## Description
 
 This is an entirely _thought_ project for a registry system, here a cancer registry. 
 
 It per now enables the admin part, i.e., managing users, units and their roles.
-
-## Features (WIP)
- - Feature 1
- - Feature 2
- - Feature 3
 
 ## Data model
 

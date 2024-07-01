@@ -1,6 +1,7 @@
 package no.cancerregistry.controller;
 
 import jakarta.validation.Valid;
+import no.cancerregistry.model.UpdateUserRoleDTO;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
 import no.cancerregistry.service.UserRoleService;
@@ -63,8 +64,8 @@ public class UserRoleController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserRoleDTO> updateUser(@Valid @RequestBody UserRoleDTO userRole, @PathVariable Long id) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserRoleDTO> updateUser(@Valid @RequestBody UpdateUserRoleDTO userRole, @PathVariable Long id) {
         userRoleService.updateUserRole(id, userRole);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

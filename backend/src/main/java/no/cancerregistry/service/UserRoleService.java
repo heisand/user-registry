@@ -73,9 +73,9 @@ public class UserRoleService {
         );
     }
 
-    public UserRole updateUserRole(Long id, UserRoleDTO userRoleDTO) {
-        Long unwrappedId = userRoleDTO.getId().orElse(id);
-        Integer unwrappedVersion = userRoleDTO.getVersion().orElse(null);
+    public UserRole updateUserRole(Long id, UpdateUserRoleDTO updateUserRoleDTO) {
+        Long unwrappedId = updateUserRoleDTO.getId().orElse(id);
+        Integer unwrappedVersion = updateUserRoleDTO.getVersion().orElse(null);
 
         if (unwrappedVersion == null) {
             throw new WrongVersionException("Version is missing");
@@ -85,23 +85,23 @@ public class UserRoleService {
             throw new WrongIdException("The specified id does mot match the requested body");
         }
 
-        UserRole existingRole = userRoleRepository.findById(userRoleDTO.getUserId())
+        UserRole existingRole = userRoleRepository.findById(unwrappedId)
                 .orElseThrow(() -> new UserRoleNotFoundException(
-                        "User role with id " + userRoleDTO.getUserId() + " does not exist."));
+                        "User role with id " + updateUserRoleDTO.getId() + " does not exist."));
 
         if (!Objects.equals(existingRole.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
                     "There is a version mismatch between the existing user role" +
                             unwrappedId + "and the requested one. " +
                             "Expected: " + existingRole.getVersion() +
-                            "Found: " + userRoleDTO.getVersion());
+                            "Found: " + updateUserRoleDTO.getVersion());
         }
 
 
 
         // Only the valid from and valid to timestamps can be changed
-        existingRole.setValidFrom(userRoleDTO.getValidFrom());
-        existingRole.setValidTo(userRoleDTO.getValidTo());
+        existingRole.setValidFrom(updateUserRoleDTO.getValidFrom());
+        existingRole.setValidTo(updateUserRoleDTO.getValidTo());
 
         if (hasOverlappingRole(existingRole)) {
             throw new OverlappingRoleException("A valid user role already exists");

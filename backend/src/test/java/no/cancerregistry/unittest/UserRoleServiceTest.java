@@ -1,6 +1,7 @@
 package no.cancerregistry.unittest;
 
 import no.cancerregistry.exception.UserRoleNotFoundException;
+import no.cancerregistry.model.UpdateUserRoleDTO;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.repository.RoleRepository;
 import no.cancerregistry.repository.UnitRepository;
@@ -108,12 +109,9 @@ public class UserRoleServiceTest {
 
     @Test
     public void givenWrongVersion_whenUpdateUserRole_thenThrowWrongVersionException() {
-        UserRoleDTO userRole = new UserRoleDTO(
+        UpdateUserRoleDTO userRole = new UpdateUserRoleDTO(
                 Optional.of(1L),
                 Optional.of(2),
-                1L,
-                1L,
-                1L,
                 ZonedDateTime.now(),
                 ZonedDateTime.now().plusDays(3));
 
@@ -130,12 +128,9 @@ public class UserRoleServiceTest {
 
     @Test
     public void givenNullVersion_whenUpdateUserRole_thenThrowWrongVersionException() {
-        UserRoleDTO userRole = new UserRoleDTO(
+        UpdateUserRoleDTO userRole = new UpdateUserRoleDTO(
                 Optional.of(1L),
                 Optional.ofNullable(null),
-                1L,
-                1L,
-                1L,
                 ZonedDateTime.now(),
                 ZonedDateTime.now().plusDays(3));
 
@@ -144,12 +139,9 @@ public class UserRoleServiceTest {
 
     @Test
     public void givenAbundantUserRole_whenUpdateUserRole_thenThrowUserRoleNotFoundException() {
-        UserRoleDTO userRole = new UserRoleDTO(
+        UpdateUserRoleDTO userRole = new UpdateUserRoleDTO(
                 Optional.of(1L),
                 Optional.of(5),
-                1L,
-                1L,
-                1L,
                 ZonedDateTime.now(),
                 ZonedDateTime.now().plusDays(3));
 
@@ -166,12 +158,9 @@ public class UserRoleServiceTest {
 
     @Test
     public void givenExistingUserRole_whenUpdateUserRole_thenUpdatesSuccessfully() {
-        UserRoleDTO userRole = new UserRoleDTO(
+        UpdateUserRoleDTO userRole = new UpdateUserRoleDTO(
                 Optional.of(1L),
                 Optional.ofNullable(1),
-                1L,
-                1L,
-                1L,
                 ZonedDateTime.now(),
                 ZonedDateTime.now().plusDays(3));
 

@@ -14,7 +14,7 @@ In real use, there are of course other considerations to make.
 
 ### Frontend
 
-The frontend is written as an React TypeScript application, using Vite as build tool and development server.
+The frontend is written as a React TypeScript application, using Vite as build tool and development server.
 
 It leverages [Chakra UI](https://v2.chakra-ui.com/) as component library, due to its modular and accessible components.
 
@@ -31,9 +31,9 @@ Some components would also benefit from being made more general so that they can
 
 The frontend should also be made responsive, so that it adjusts to different screen sizes.
 
-### Backend
+In addition, it would be beneficial to add an E2E framwork, to increase E2E testing coverage.
 
-CORS can be handled globally instead of per controller.
+### Backend
 
 For better security, the endpoints can be secured.
 

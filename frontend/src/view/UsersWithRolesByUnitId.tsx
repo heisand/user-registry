@@ -91,7 +91,7 @@ export function UsersWithRolesByUnitId() {
       </Modal>
       {users.length > 0 ? (
         <Box marginTop="48px">
-          <Heading>Users by unit ID</Heading>
+          <Heading color="#393c61">User roles by unit ID</Heading>
           {loading ? (
             <Spinner size="xl" />
           ) : (

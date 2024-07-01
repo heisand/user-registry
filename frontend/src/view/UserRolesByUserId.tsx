@@ -90,7 +90,7 @@ import {
         </Modal>
         {userRoles.length > 0 ? (
           <Box marginTop="48px">
-            <Heading>Valid user roles</Heading>
+            <Heading color="#393c61">User roles by user ID</Heading>
             {loading ? (
               <Spinner size="xl" />
             ) : (

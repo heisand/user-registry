@@ -116,7 +116,7 @@ export function ValidUserRolesByUnitAndTimestamp() {
       </Modal>
       {users.length > 0 ? (
         <Box marginTop="48px">
-          <Heading>Valid user roles</Heading>
+          <Heading color="#393c61">Valid user roles</Heading>
           {loading ? (
             <Spinner size="xl" />
           ) : (

@@ -86,10 +86,12 @@ public class UnitService {
 
         if (!Objects.equals(existingUnit.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
-                    "There is a version mismatch between the existing unit" +
-                            unwrappedId + "and the requested one." +
-                            "Expected: " + existingUnit.getVersion() +
-                            "Found: " + unitDTO.getVersion());
+                    "There is a version mismatch between the existing unit " +
+                            unwrappedId +
+                            " and the requested one. Expected: " +
+                            existingUnit.getVersion() +
+                            ", Found: " +
+                            unitDTO.getVersion());
         }
 
         existingUnit.setName(unitDTO.getName());

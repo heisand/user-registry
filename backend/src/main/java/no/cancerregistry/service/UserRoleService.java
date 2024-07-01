@@ -43,11 +43,11 @@ public class UserRoleService {
 
     public UserRoleDTO createUserRole(UserRoleDTO userRoleDTO) {
         User user = userRepository.findById(userRoleDTO.getUserId()).orElseThrow(() ->
-                new RuntimeException("User not found"));
+                new UserNotFoundException("User " + userRoleDTO.getUserId() + " not found"));
         Unit unit = unitRepository.findById(userRoleDTO.getUnitId()).orElseThrow(() ->
-                new RuntimeException("Unit not found"));
+                new UnitNotFoundException("Unit " + userRoleDTO.getUnitId() + " not found"));
         Role role = roleRepository.findById(userRoleDTO.getRoleId()).orElseThrow(() ->
-                new RuntimeException("Role not found"));
+                new RoleNotFoundException("Role " + userRoleDTO.getRoleId() + " not found"));
 
         UserRole userRole = new UserRole();
         userRole.setVersion(1);
@@ -88,14 +88,16 @@ public class UserRoleService {
 
         UserRole existingRole = userRoleRepository.findById(unwrappedId)
                 .orElseThrow(() -> new UserRoleNotFoundException(
-                        "User role with id " + updateUserRoleDTO.getId() + " does not exist."));
+                        "User role with " + updateUserRoleDTO.getId() + " does not exist."));
 
         if (!Objects.equals(existingRole.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
-                    "There is a version mismatch between the existing user role" +
-                            unwrappedId + "and the requested one. " +
-                            "Expected: " + existingRole.getVersion() +
-                            "Found: " + updateUserRoleDTO.getVersion());
+                    "There is a version mismatch between the existing user role " +
+                            unwrappedId +
+                            " and the requested one. Expected: " +
+                            existingRole.getVersion() +
+                            ", Found: " +
+                            updateUserRoleDTO.getVersion());
         }
 
 

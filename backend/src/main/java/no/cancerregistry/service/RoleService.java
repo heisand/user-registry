@@ -82,10 +82,12 @@ public class RoleService {
 
         if (!Objects.equals(existingRole.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
-                    "There is a version mismatch between the existing role" +
-                            unwrappedId + "and the requested one." +
-                            "Expected: " + existingRole.getVersion() +
-                            "Found: " + roleDTO.getVersion());
+                    "There is a version mismatch between the existing role " +
+                            unwrappedId +
+                            " and the requested one. Expected: " +
+                            existingRole.getVersion() +
+                            ", Found: " +
+                            roleDTO.getVersion());
         }
 
         existingRole.setName(roleDTO.getName());

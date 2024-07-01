@@ -103,10 +103,12 @@ public class UserService {
 
         if (!Objects.equals(existingUser.getVersion(), unwrappedVersion)) {
             throw new WrongVersionException(
-                    "There is a version mismatch between the existing user" +
-                            unwrappedId + "and the requested one." +
-                            "Expected: " + existingUser.getVersion() +
-                            "Found: " + userDTO.getVersion());
+                    "There is a version mismatch between the existing user " +
+                            unwrappedId +
+                            " and the requested one. Expected: " +
+                            existingUser.getVersion() +
+                            ", Found: " +
+                            userDTO.getVersion());
         }
 
         existingUser.setName(userDTO.getName());

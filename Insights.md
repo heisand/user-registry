@@ -25,6 +25,6 @@ Due to time limitations, the frontend does not yet support much feedback on acti
 A better solution will be to not only swallow any errors, but also act upon them and show feecback to users in the form of error messages and 
 indications of successful actions.
 
-Some components would also benefit from being made more general so that the can be reused.
+Some components would also benefit from being made more general so that they can be reused.
 
 The frontend should also be made responsive, so that it adjusts to different screen sizes.

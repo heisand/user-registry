@@ -2,6 +2,7 @@ package no.cancerregistry.service;
 
 import no.cancerregistry.exception.*;
 import no.cancerregistry.model.RoleDTO;
+import no.cancerregistry.model.UpdateUserRoleDTO;
 import no.cancerregistry.model.UserRoleDTO;
 import no.cancerregistry.model.UserWithRolesDTO;
 import no.cancerregistry.repository.RoleRepository;
@@ -78,11 +79,11 @@ public class UserRoleService {
         Integer unwrappedVersion = updateUserRoleDTO.getVersion().orElse(null);
 
         if (unwrappedVersion == null) {
-            throw new WrongVersionException("Version is missing");
+            throw new WrongVersionException("Version is missing from the request.");
         }
 
         if (!Objects.equals(unwrappedId, id)) {
-            throw new WrongIdException("The specified id does mot match the requested body");
+            throw new WrongIdException("The specified id does mot match the requested body.");
         }
 
         UserRole existingRole = userRoleRepository.findById(unwrappedId)
@@ -104,7 +105,7 @@ public class UserRoleService {
         existingRole.setValidTo(updateUserRoleDTO.getValidTo());
 
         if (hasOverlappingRole(existingRole)) {
-            throw new OverlappingRoleException("A valid user role already exists");
+            throw new OverlappingRoleException("A valid user role already exists.");
         }
 
         return userRoleRepository.save(existingRole);
@@ -158,7 +159,7 @@ public class UserRoleService {
             // TODO: Get by timestamp
             userRoles = (List<UserRole>) userRoleRepository.findAll();
         } else {
-            throw new FilterNotSupportedException("The provided filter is not supported");
+            throw new FilterNotSupportedException("The provided filter is not supported.");
         }
 
         List<UserRole> userRoles2 = (List<UserRole>) userRoleRepository.findAll();

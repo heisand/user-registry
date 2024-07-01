@@ -73,11 +73,11 @@ public class UnitService {
         Integer unwrappedVersion = unitDTO.getVersion().orElse(null);
 
         if (unwrappedVersion == null) {
-            throw new WrongVersionException("Version is missing");
+            throw new WrongVersionException("Version is missing from the requests.");
         }
 
         if (!Objects.equals(unwrappedId, id)) {
-            throw new WrongIdException("The specified id does mot match the requested body");
+            throw new WrongIdException("The specified id does mot match the requested body.");
         }
 
         Unit existingUnit = unitRepository.findById(unwrappedId)

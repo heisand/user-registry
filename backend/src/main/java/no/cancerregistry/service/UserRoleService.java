@@ -156,13 +156,10 @@ public class UserRoleService {
         } else if (version.isPresent()) {
             userRoles = userRoleRepository.findUserRolesByVersion(version.orElseThrow());
         } else if (timestamp.isPresent()) {
-            // TODO: Get by timestamp
-            userRoles = (List<UserRole>) userRoleRepository.findAll();
+            userRoles = userRoleRepository.findUserRolesByTimestamp(timestamp.orElseThrow());
         } else {
             throw new FilterNotSupportedException("The provided filter is not supported.");
         }
-
-        List<UserRole> userRoles2 = (List<UserRole>) userRoleRepository.findAll();
 
         return userRoles.stream().map(
                 userRole -> new UserRoleDTO(

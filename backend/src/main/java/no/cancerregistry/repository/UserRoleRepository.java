@@ -29,6 +29,9 @@ public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
     @Query("SELECT ur FROM UserRole ur WHERE ur.version = :version")
     List<UserRole> findUserRolesByVersion(Integer version);
 
+    @Query("SELECT ur FROM UserRole ur WHERE :timestamp BETWEEN ur.validFrom AND COALESCE(ur.validTo, :timestamp)")
+    List<UserRole> findUserRolesByTimestamp(ZonedDateTime timestamp);
+
     @Query("SELECT CASE WHEN EXISTS (" +
             "SELECT 1 FROM UserRole ur " +
             "WHERE ur.user.id = :userId " +

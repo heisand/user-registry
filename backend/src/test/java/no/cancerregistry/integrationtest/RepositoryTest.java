@@ -151,7 +151,7 @@ public class RepositoryTest {
     }
 
     @Test
-    public void givenOverlappingRoles_thenFindOverlappingRoles() {
+    public void givenOverlappingRoles_whenFindUserRoles_thenFindOverlappingRoles() {
         User user = new User();
         user.setVersion(2);
         user.setName("Researcher Researchersen");
@@ -186,7 +186,7 @@ public class RepositoryTest {
     }
 
     @Test
-    public void givenNoOverlappingRoles_thenFindNoOverlappingRoles() {
+    public void givenNoOverlappingRoles_whenFindUserRoles_thenFindNoOverlappingRoles() {
         User user = new User();
         user.setVersion(2);
         user.setName("Researcher Researchersen");
@@ -232,5 +232,62 @@ public class RepositoryTest {
         boolean isOverlappingRoles = userRoleService.hasOverlappingRole(userRole2);
 
         assertFalse(isOverlappingRoles);
+    }
+
+    @Test
+    public void whenFindUserRolesByTimestamp_thenGetCorrectUserRoles() {
+        User user = new User();
+        user.setVersion(2);
+        user.setName("Researcher Researchersen");
+
+        User savedUser = userRepository.save(user);
+
+        Unit unit = new Unit();
+        unit.setName("Researcher");
+        unit.setVersion(2);
+
+        Unit savedUnit = unitRepository.save(unit);
+
+        Unit unit2 = new Unit();
+        unit.setName("Lege");
+        unit.setVersion(2);
+
+        Unit savedUnit2 = unitRepository.save(unit2);
+
+        Role role = new Role();
+        role.setName("Researcher");
+        role.setVersion(2);
+
+        Role savedRole = roleRepository.save(role);
+
+        ZonedDateTime validFrom = ZonedDateTime.now();
+        ZonedDateTime validTo = ZonedDateTime.now().plusDays(1);
+
+        ZonedDateTime validFrom2 = ZonedDateTime.now().plusDays(2);
+        ZonedDateTime validTo2 = ZonedDateTime.now().plusDays(3);
+
+        UserRole userRole = new UserRole();
+        userRole.setVersion(2);
+        userRole.setUser(savedUser);
+        userRole.setUnit(savedUnit);
+        userRole.setRole(savedRole);
+        userRole.setValidFrom(validFrom);
+        userRole.setValidTo(validTo);
+
+        userRoleRepository.save(userRole);
+
+        UserRole userRole2 = new UserRole();
+        userRole2.setVersion(2);
+        userRole2.setUser(savedUser);
+        userRole2.setUnit(savedUnit2);
+        userRole2.setRole(savedRole);
+        userRole2.setValidFrom(validFrom2);
+        userRole2.setValidTo(validTo2);
+
+        userRoleRepository.save(userRole2);
+
+        List<UserRole> userRoles = userRoleRepository.findUserRolesByTimestamp(validFrom);
+
+        assertEquals(1, userRoles.size());
     }
 }

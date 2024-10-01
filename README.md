@@ -12,11 +12,9 @@
 
 ## Description
 
-This is an entirely _thought_ project for a registry system, here a cancer registry. 
+This is an entirely _thought_ project for a registry system, here a user registry. 
 
 It per now enables the admin part, i.e., managing users, units and their roles.
-
-Please take a look at the [insights](https://github.com/heisand/cancer-registry/blob/main/Insights.md) about this project, explaining technical dedecisions and thoughts about future improvements.
 
 ## Data model
 

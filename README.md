@@ -1,4 +1,4 @@
-# cancer-registry
+# user-registry
 
 ## Table of Contents
   - [Description](#description)
